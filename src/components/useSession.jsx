@@ -5,7 +5,10 @@ export default function useSession() {
     switch (action.type) {
       case "logout":
         return {};
+      case "reset":
+        return {};
       case "set":
+        console.log("action payload : ", action.payload);
         return action.payload;
       default:
         return currState;

@@ -58,7 +58,7 @@ export default function Login({ session, dispatchSession }) {
       token: data.token,
       user_id: data.session.user_id,
     };
-    dispatchSession({ type: "set", payload: { session } });
+    dispatchSession({ type: "set", payload: session });
 
     // retour
     setIsLoading(false);
@@ -70,6 +70,7 @@ export default function Login({ session, dispatchSession }) {
   return (
     <div className="centerDiv">
       <form className={styles.form}>
+        <Header />
         <div className={styles.row}>
           <label htmlFor="email">Email</label>
           <input

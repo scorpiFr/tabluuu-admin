@@ -20,7 +20,12 @@ export default function App() {
             <Login session={session} dispatchSession={dispatchSession} />
           }
         />
-        <Route path="/moncompte" element={<Moncompte session={session} />} />
+        <Route
+          path="/moncompte"
+          element={
+            <Moncompte session={session} dispatchSession={dispatchSession} />
+          }
+        />
         <Route path="/motdepasse" element={<p>test</p>} />
         <Route path="/mescartes" element={<p>test</p>} />
         <Route path="/logout" element={<p>test</p>} />
