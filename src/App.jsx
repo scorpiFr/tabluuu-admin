@@ -5,6 +5,7 @@ import useSession from "./components/UseSession";
 import Moncompte from "./pages/Moncompte";
 import Login from "./pages/Login";
 import ChangePassword from "./pages/ChangePassword";
+import Logout from "./pages/Logout";
 import "./App.css";
 
 export default function App() {
@@ -37,7 +38,12 @@ export default function App() {
           }
         />
         <Route path="/mescartes" element={<p>test</p>} />
-        <Route path="/logout" element={<p>test</p>} />
+        <Route
+          path="/logout"
+          element={
+            <Logout session={session} dispatchSession={dispatchSession} />
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

@@ -84,8 +84,25 @@ async function updatePassword(etablissement_id, token, password) {
   }
 }
 
+async function logout(token) {
+  const url = Config.tabluuu_server_url + "/admin/logout";
+  const headers = {
+    Authorization: token,
+  };
+  try {
+    const response = await axios.get(url, {
+      headers: headers,
+    });
+    return { status: response.status, data: response.data };
+  } catch (error) {
+    console.log(error);
+    return { status: error.response.status, data: error.response.statusText };
+  }
+}
+
 export {
   fetchEtablissement,
   updateEtablissementForEtablissement,
   updatePassword,
+  logout,
 };

@@ -8,7 +8,6 @@ export default function useSession() {
       case "reset":
         return {};
       case "set":
-        console.log("action payload : ", action.payload);
         return action.payload;
       default:
         return currState;

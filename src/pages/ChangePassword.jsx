@@ -4,6 +4,7 @@ import { HashLoader } from "react-spinners";
 import styles from "./Login.module.css";
 import Header from "../components/Header";
 import { updatePassword } from "../components/EtablissementApiRequests";
+
 export default function ChangePassword({ session, dispatchSession }) {
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
@@ -103,7 +104,7 @@ export default function ChangePassword({ session, dispatchSession }) {
           {!isLoading && success && (
             <>
               <p>
-                <span class="checkmark"></span>&nbsp;&nbsp;Enregistré avec
+                <span className="checkmark"></span>&nbsp;&nbsp;Enregistré avec
                 succès
               </p>
               <button
