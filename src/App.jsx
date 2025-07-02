@@ -4,6 +4,7 @@ import Homepage from "./pages/Homepage";
 import useSession from "./components/UseSession";
 import Moncompte from "./pages/Moncompte";
 import Login from "./pages/Login";
+import ChangePassword from "./pages/ChangePassword";
 import "./App.css";
 
 export default function App() {
@@ -26,7 +27,15 @@ export default function App() {
             <Moncompte session={session} dispatchSession={dispatchSession} />
           }
         />
-        <Route path="/motdepasse" element={<p>test</p>} />
+        <Route
+          path="/motdepasse"
+          element={
+            <ChangePassword
+              session={session}
+              dispatchSession={dispatchSession}
+            />
+          }
+        />
         <Route path="/mescartes" element={<p>test</p>} />
         <Route path="/logout" element={<p>test</p>} />
       </Routes>

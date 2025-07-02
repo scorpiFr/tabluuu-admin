@@ -104,3 +104,12 @@ input:focus {
   color: #fff;
   text-decoration: none;
 }
+
+.checkmark {
+  display: inline-block;
+  transform: rotate(45deg);
+  height: 12px;
+  width: 17px;
+  border-bottom: 7px solid #78b13f;
+  border-right: 7px solid #78b13f;
+}

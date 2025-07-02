@@ -67,13 +67,14 @@ export default function Moncompte({ session, dispatchSession }) {
     setIsLoading(true);
     setError("");
     // verif des parametres
-    if (!emailCommandes.length) {
+    if (!emailFacturation.length) {
       setIsLoading(false);
-      setError("Veuillez entrer votre login et mot de passe");
+      setError("Veuillez entrer votre email de facturation");
       return false;
     }
 
     // data transmit
+    // eslint-disable-next-line no-unused-vars
     const { status, data } = await updateEtablissementForEtablissement(
       session.etablissement_id,
       session.token,

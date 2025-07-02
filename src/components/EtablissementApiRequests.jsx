@@ -59,4 +59,33 @@ async function updateEtablissementForEtablissement(
   }
 }
 
-export { fetchEtablissement, updateEtablissementForEtablissement };
+async function updatePassword(etablissement_id, token, password) {
+  const inputs = {
+    password: password,
+  };
+  const inputData = new URLSearchParams(inputs);
+  const url =
+    Config.tabluuu_server_url +
+    "/admin/etablissement/updatePassword/" +
+    etablissement_id;
+
+  const headers = {
+    "Content-Type": "application/x-www-form-urlencoded",
+    Authorization: token,
+  };
+  try {
+    const response = await axios.patch(url, inputData, {
+      headers: headers,
+    });
+    return { status: response.status, data: response.data };
+  } catch (error) {
+    console.log(error);
+    return { status: error.response.status, data: error.response.statusText };
+  }
+}
+
+export {
+  fetchEtablissement,
+  updateEtablissementForEtablissement,
+  updatePassword,
+};
