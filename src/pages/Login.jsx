@@ -16,10 +16,13 @@ export default function Login({ session, dispatchSession }) {
 
   async function login(email, password) {
     try {
-      const response = await axios.post(Config.tabluuu_server_url + "/login", {
-        email: email,
-        password: password,
-      });
+      const response = await axios.post(
+        Config.tabluuu_server_url + "/admin/login",
+        {
+          email: email,
+          password: password,
+        }
+      );
       // console.log(response.status, response.data);
       return { status: response.status, data: response.data };
     } catch (error) {

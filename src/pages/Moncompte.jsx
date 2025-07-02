@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { HashLoader } from "react-spinners";
-import Config from "../components/Config.jsx";
+import {
+  fetchEtablissement,
+  updateEtablissementForEtablissement,
+} from "../components/EtablissementApiRequests";
 import Header from "../components/Header";
 import styles from "./Login.module.css";
 
@@ -14,29 +16,13 @@ export default function Moncompte({ session, dispatchSession }) {
   const [prenom, setPrenom] = useState("");
   const [adresse, setAdresse] = useState("");
   const [tel, setTel] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
   const [typeContrat, setTypeContrat] = useState("");
   const [prix, setPrix] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState("");
 
   // verify session
   let navigate = useNavigate();
-
-  async function fetchEtablissement(id, token) {
-    try {
-      const url = Config.tabluuu_server_url + "/etablissement/" + id;
-      console.log(url);
-
-      const response = await axios.get(url, {
-        headers: {
-          Authorization: token,
-        },
-      });
-      return { status: response.status, data: response.data };
-    } catch (error) {
-      console.log(error);
-      return { status: 500, data: {} };
-    }
-  }
 
   async function handleFetchEtalissement() {
     // inits
@@ -47,7 +33,7 @@ export default function Moncompte({ session, dispatchSession }) {
       session.token
     );
     // error management
-    if (status != 200) {
+    if (status == 401) {
       setIsLoading(false);
       dispatchSession("reset");
       navigate("/login");
@@ -74,6 +60,44 @@ export default function Moncompte({ session, dispatchSession }) {
       handleFetchEtalissement();
     }
   }, [session]);
+
+  async function HandleSubmit(e) {
+    // initialisation
+    e.preventDefault();
+    setIsLoading(true);
+    setError("");
+    // verif des parametres
+    if (!emailCommandes.length) {
+      setIsLoading(false);
+      setError("Veuillez entrer votre login et mot de passe");
+      return false;
+    }
+
+    // data transmit
+    const { status, data } = await updateEtablissementForEtablissement(
+      session.etablissement_id,
+      session.token,
+      emailFacturation,
+      emailCommandes,
+      nomEtablissement,
+      nom,
+      prenom,
+      adresse,
+      tel
+    );
+    if (status == 401) {
+      setIsLoading(false);
+      setError("");
+      dispatchSession({ type: "reset" });
+      navigate("/login");
+      return false;
+    }
+
+    // retour
+    setIsLoading(false);
+    setError("");
+    return false;
+  }
 
   return (
     <div className="centerDiv">
@@ -158,6 +182,7 @@ export default function Moncompte({ session, dispatchSession }) {
           <label>Prix : {prix} € par mois</label>
         </div>
         <div>
+          {error && <p>{error}</p>}
           {isLoading && (
             <center>
               <HashLoader color={"#ffffff"} size="50px" />
