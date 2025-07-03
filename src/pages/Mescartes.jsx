@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { HashLoader } from "react-spinners";
 import styles from "./Login.module.css";
 import Header from "../components/Header";
@@ -67,7 +67,7 @@ export default function Mescartes({ session, dispatchSession }) {
   }
 
   function HandleNewDynamicMenu() {
-    navigate("/newDynamicMenu");
+    navigate("/dynamicmenu/new");
   }
 
   if (isLoading) {
@@ -119,7 +119,10 @@ export default function Mescartes({ session, dispatchSession }) {
                   checked={menu.is_active == 1 ? "checked" : ""}
                   onChange={(e) => handleChangeSelected(e, menu.id)}
                 />
-                &nbsp;{menu.nom}
+                &nbsp;{menu.nom}&nbsp;
+                <NavLink to={`/dynamicmenu/edit/${menu.id}`}>
+                  <i className="fas fa-edit" alt="Modifier"></i>
+                </NavLink>
               </p>
             </li>
           );

@@ -7,7 +7,9 @@ import Login from "./pages/Login";
 import ChangePassword from "./pages/ChangePassword";
 import Mescartes from "./pages/Mescartes";
 import Logout from "./pages/Logout";
-import NewDynamicMenu from "./pages/NewDynamicMenu";
+import DynamicMenuNew from "./pages/DynamicMenuNew";
+import DynamicMenuEdit from "./pages/DynamicMenuEdit";
+
 import "./App.css";
 
 export default function App() {
@@ -53,9 +55,18 @@ export default function App() {
         />
 
         <Route
-          path="/newDynamicMenu"
+          path="/dynamicmenu/new"
           element={
-            <NewDynamicMenu
+            <DynamicMenuNew
+              session={session}
+              dispatchSession={dispatchSession}
+            />
+          }
+        />
+        <Route
+          path="/dynamicmenu/edit/:id"
+          element={
+            <DynamicMenuEdit
               session={session}
               dispatchSession={dispatchSession}
             />

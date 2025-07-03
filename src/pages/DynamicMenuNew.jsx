@@ -5,7 +5,7 @@ import styles from "./Login.module.css";
 import Header from "../components/Header";
 import { createDynamicMenus } from "../components/DynamicMenusApiRequest";
 
-export default function NewDynamicMenu({ session, dispatchSession }) {
+export default function DynamicMenuNew({ session, dispatchSession }) {
   const [nom, setNom] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
