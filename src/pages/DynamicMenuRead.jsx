@@ -4,7 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { HashLoader } from "react-spinners";
 import styles from "./Login.module.css";
 import Header from "../components/Header";
-import { fetchSections } from "../components/SectionApiRequest";
+import { fetchSections, deleteSection } from "../components/SectionApiRequest";
 
 export default function DynamicMenuRead({ session, dispatchSession }) {
   const [sections, setSections] = useState([]);
@@ -12,9 +12,9 @@ export default function DynamicMenuRead({ session, dispatchSession }) {
   const [error, setError] = useState("");
   const { dynamicmenuid } = useParams();
 
-  async function handleFetchSections(changeReload = false) {
+  async function handleFetchSections(changeLoadinStatus = true) {
     // inits
-    if (changeReload) {
+    if (changeLoadinStatus) {
       setIsLoading(true);
     }
     setError("");
@@ -32,9 +32,31 @@ export default function DynamicMenuRead({ session, dispatchSession }) {
     setSections(data);
 
     // return
-    if (changeReload) {
+    if (changeLoadinStatus) {
       setIsLoading(false);
     }
+    setError("");
+  }
+
+  async function HandleRemove(e, sectionId) {
+    // inits
+    e.preventDefault();
+    // setIsLoading(true);
+    setError("");
+
+    // action data
+    const { status, data } = await deleteSection(session.token, sectionId);
+    // error management
+    if (status == 401) {
+      setIsLoading(false);
+      dispatchSession("reset");
+      navigate("/login");
+    }
+    // re-fetch
+    handleFetchSections(false);
+
+    // return
+    setIsLoading(false);
     setError("");
   }
 
@@ -54,6 +76,49 @@ export default function DynamicMenuRead({ session, dispatchSession }) {
       handleFetchSections();
     }
   }, [session]);
+
+  if (isLoading) {
+    return (
+      <div className="centerDiv">
+        <Header />
+        <h1>Mes sections</h1>
+        <p>Chaque carte comporte des sections</p>
+        <p>&nbsp;</p>
+        <button
+          className={styles.ctabutton}
+          onClick={(e) => HandleNewSection(e)}
+        >
+          + Ajouter une section
+        </button>
+        <p>&nbsp;</p>
+        <center>
+          <HashLoader color={"#000"} size="200px" />
+        </center>
+      </div>
+    );
+  }
+  if (!sections.length) {
+    return (
+      <div className="centerDiv">
+        <Header />
+        <h1>Mes sections</h1>
+        <p>Chaque carte comporte des sections</p>
+        <p>&nbsp;</p>
+        <button
+          className={styles.ctabutton}
+          onClick={(e) => HandleNewSection(e)}
+        >
+          + Ajouter une section
+        </button>
+        <p>&nbsp;</p>
+        <ul>
+          <li className="tab">
+            <p>Aucune carte trouvée</p>
+          </li>
+        </ul>
+      </div>
+    );
+  }
 
   return (
     <div className="centerDiv">
@@ -81,21 +146,21 @@ export default function DynamicMenuRead({ session, dispatchSession }) {
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <button
                   className={styles.minibutton}
-                  onClick={(e) => HandleMoveUp(e, menu.id)}
+                  onClick={(e) => HandleMoveUp(e, section.id)}
                 >
                   <i className="fas fa-arrow-up" alt="Monter"></i>
                 </button>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <button
                   className={styles.minibutton}
-                  onClick={(e) => HandleMoveDown(e, menu.id)}
+                  onClick={(e) => HandleMoveDown(e, section.id)}
                 >
                   <i className="fas fa-arrow-down" alt="Descendre"></i>
                 </button>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <button
                   className={styles.minibutton_red}
-                  onClick={(e) => HandleRemove(e, menu.id)}
+                  onClick={(e) => HandleRemove(e, section.id)}
                 >
                   <i className="fas fa-remove" alt="Supprimer"></i>
                 </button>

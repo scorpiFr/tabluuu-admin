@@ -114,9 +114,10 @@ async function movedownDynamicMenu(token, id) {
     return { status: error.response.status };
   }
 }
+*/
 
-async function deleteDynamicMenu(token, id) {
-  const url = Config.tabluuu_server_url + "/admin/dynamicmenu/" + id;
+async function deleteSection(token, id) {
+  const url = Config.tabluuu_server_url + "/admin/section/" + id;
   const headers = {
     Authorization: token,
   };
@@ -130,5 +131,10 @@ async function deleteDynamicMenu(token, id) {
     return { status: error.response.status };
   }
 }
-*/
-export { fetchSections, createSection, fetchSection, updateSection };
+export {
+  fetchSections,
+  createSection,
+  fetchSection,
+  updateSection,
+  deleteSection,
+};
