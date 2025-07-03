@@ -6,6 +6,7 @@ import Header from "../components/Header";
 import {
   fetchDynamicMenus,
   setDynamicMenuSelected,
+  deleteDynamicMenu,
 } from "../components/DynamicMenusApiRequest";
 
 export default function Mescartes({ session, dispatchSession }) {
@@ -53,6 +54,25 @@ export default function Mescartes({ session, dispatchSession }) {
     setIsLoading(true);
     // set status action
     const { status } = await setDynamicMenuSelected(session.token, id);
+    // error management
+    if (status == 401) {
+      setIsLoading(false);
+      dispatchSession("reset");
+      navigate("/login");
+    }
+    // reload list
+    await handleFetchDynamicMenus();
+    // return
+    setIsLoading(false);
+    setError("");
+  }
+
+  async function HandleRemove(e, id) {
+    // inits
+    e.preventDefault();
+    setIsLoading(true);
+    // set status action
+    const { status } = await deleteDynamicMenu(session.token, id);
     // error management
     if (status == 401) {
       setIsLoading(false);
@@ -119,10 +139,16 @@ export default function Mescartes({ session, dispatchSession }) {
                   checked={menu.is_active == 1 ? "checked" : ""}
                   onChange={(e) => handleChangeSelected(e, menu.id)}
                 />
-                &nbsp;{menu.nom}&nbsp;
+                &nbsp;{menu.nom}&nbsp;&nbsp;&nbsp;&nbsp;
                 <NavLink to={`/dynamicmenu/edit/${menu.id}`}>
                   <i className="fas fa-edit" alt="Modifier"></i>
                 </NavLink>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <i
+                  className="fas fa-remove"
+                  alt="Supprimer"
+                  onClick={(e) => HandleRemove(e, menu.id)}
+                ></i>
               </p>
             </li>
           );

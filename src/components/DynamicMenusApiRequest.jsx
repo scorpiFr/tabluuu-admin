@@ -95,10 +95,27 @@ async function updateDynamicMenu(token, id, nom) {
   }
 }
 
+async function deleteDynamicMenu(token, id) {
+  const url = Config.tabluuu_server_url + "/admin/dynamicmenu/" + id;
+  const headers = {
+    Authorization: token,
+  };
+  try {
+    const response = await axios.delete(url, {
+      headers: headers,
+    });
+    return { status: response.status };
+  } catch (error) {
+    console.log(error);
+    return { status: error.response.status };
+  }
+}
+
 export {
   fetchDynamicMenus,
   fetchDynamicMenu,
   createDynamicMenus,
   setDynamicMenuSelected,
   updateDynamicMenu,
+  deleteDynamicMenu,
 };
