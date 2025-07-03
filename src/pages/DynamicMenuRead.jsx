@@ -4,7 +4,12 @@ import { useParams, useNavigate } from "react-router-dom";
 import { HashLoader } from "react-spinners";
 import styles from "./Login.module.css";
 import Header from "../components/Header";
-import { fetchSections, deleteSection } from "../components/SectionApiRequest";
+import {
+  fetchSections,
+  deleteSection,
+  moveupSection,
+  movedownSection,
+} from "../components/SectionApiRequest";
 
 export default function DynamicMenuRead({ session, dispatchSession }) {
   const [sections, setSections] = useState([]);
@@ -21,7 +26,6 @@ export default function DynamicMenuRead({ session, dispatchSession }) {
 
     // fetch data
     const { status, data } = await fetchSections(dynamicmenuid, session.token);
-    console.log(status, data);
     // error management
     if (status == 401) {
       setIsLoading(false);
@@ -46,6 +50,50 @@ export default function DynamicMenuRead({ session, dispatchSession }) {
 
     // action data
     const { status, data } = await deleteSection(session.token, sectionId);
+    // error management
+    if (status == 401) {
+      setIsLoading(false);
+      dispatchSession("reset");
+      navigate("/login");
+    }
+    // re-fetch
+    handleFetchSections(false);
+
+    // return
+    setIsLoading(false);
+    setError("");
+  }
+
+  async function HandleMoveUp(e, sectionId) {
+    // inits
+    e.preventDefault();
+    // setIsLoading(true);
+    setError("");
+
+    // action data
+    const { status, data } = await movedownSection(session.token, sectionId);
+    // error management
+    if (status == 401) {
+      setIsLoading(false);
+      dispatchSession("reset");
+      navigate("/login");
+    }
+    // re-fetch
+    handleFetchSections(false);
+
+    // return
+    setIsLoading(false);
+    setError("");
+  }
+
+  async function HandleMoveDown(e, sectionId) {
+    // inits
+    e.preventDefault();
+    // setIsLoading(true);
+    setError("");
+
+    // action data
+    const { status, data } = await moveupSection(session.token, sectionId);
     // error management
     if (status == 401) {
       setIsLoading(false);

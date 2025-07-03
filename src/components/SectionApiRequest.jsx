@@ -75,12 +75,10 @@ async function updateSection(token, id, nom) {
   }
 }
 
-/*
-
-async function moveupDynamicMenu(token, id) {
+async function moveupSection(token, id) {
   const inputs = {};
   const inputData = new URLSearchParams(inputs);
-  const url = Config.tabluuu_server_url + "/admin/dynamicmenu/moveup/" + id;
+  const url = Config.tabluuu_server_url + "/admin/section/moveup/" + id;
   const headers = {
     "Content-Type": "application/x-www-form-urlencoded",
     Authorization: token,
@@ -96,10 +94,10 @@ async function moveupDynamicMenu(token, id) {
   }
 }
 
-async function movedownDynamicMenu(token, id) {
+async function movedownSection(token, id) {
   const inputs = {};
   const inputData = new URLSearchParams(inputs);
-  const url = Config.tabluuu_server_url + "/admin/dynamicmenu/movedown/" + id;
+  const url = Config.tabluuu_server_url + "/admin/section/movedown/" + id;
   const headers = {
     "Content-Type": "application/x-www-form-urlencoded",
     Authorization: token,
@@ -114,7 +112,6 @@ async function movedownDynamicMenu(token, id) {
     return { status: error.response.status };
   }
 }
-*/
 
 async function deleteSection(token, id) {
   const url = Config.tabluuu_server_url + "/admin/section/" + id;
@@ -137,4 +134,6 @@ export {
   fetchSection,
   updateSection,
   deleteSection,
+  moveupSection,
+  movedownSection,
 };
