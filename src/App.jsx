@@ -9,11 +9,13 @@ import Mescartes from "./pages/Mescartes";
 import Logout from "./pages/Logout";
 import DynamicMenuNew from "./pages/DynamicMenuNew";
 import DynamicMenuEdit from "./pages/DynamicMenuEdit";
+import DynamicMenuRead from "./pages/DynamicMenuRead";
+import SectionNew from "./pages/SectionNew";
+import SectionEdit from "./pages/SectionEdit";
 
 import "./App.css";
 
 export default function App() {
-  // eslint-disable-next-line no-unused-vars
   const { session, dispatchSession } = useSession();
 
   return (
@@ -70,6 +72,27 @@ export default function App() {
               session={session}
               dispatchSession={dispatchSession}
             />
+          }
+        />
+        <Route
+          path="/dynamicmenu/read/:dynamicmenuid"
+          element={
+            <DynamicMenuRead
+              session={session}
+              dispatchSession={dispatchSession}
+            />
+          }
+        />
+        <Route
+          path="/section/new/:dynamicmenuid"
+          element={
+            <SectionNew session={session} dispatchSession={dispatchSession} />
+          }
+        />
+        <Route
+          path="/section/edit/:id"
+          element={
+            <SectionEdit session={session} dispatchSession={dispatchSession} />
           }
         />
       </Routes>

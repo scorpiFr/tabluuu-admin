@@ -198,7 +198,11 @@ export default function Mescartes({ session, dispatchSession }) {
                   checked={menu.is_active == 1 ? "checked" : ""}
                   onChange={(e) => handleChangeSelected(e, menu.id)}
                 />
-                &nbsp;{menu.nom}&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;
+                <NavLink to={`/dynamicmenu/read/${menu.id}`}>
+                  {menu.nom}
+                </NavLink>
+                &nbsp;&nbsp;&nbsp;&nbsp;
                 <button
                   className={styles.minibutton}
                   onClick={(e) => HandleGotoEdit(e, menu.id)}
