@@ -134,6 +134,11 @@ export default function Mescartes({ session, dispatchSession }) {
     navigate("/dynamicmenu/new");
   }
 
+  function HandleGotoEdit(e, id) {
+    e.preventDefault();
+    navigate("/dynamicmenu/edit/" + id);
+  }
+
   if (isLoading) {
     return (
       <div className="centerDiv">
@@ -194,27 +199,33 @@ export default function Mescartes({ session, dispatchSession }) {
                   onChange={(e) => handleChangeSelected(e, menu.id)}
                 />
                 &nbsp;{menu.nom}&nbsp;&nbsp;&nbsp;&nbsp;
-                <NavLink to={`/dynamicmenu/edit/${menu.id}`}>
+                <button
+                  className={styles.minibutton}
+                  onClick={(e) => HandleGotoEdit(e, menu.id)}
+                >
                   <i className="fas fa-edit" alt="Modifier"></i>
-                </NavLink>
+                </button>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <i
-                  className="fas fa-arrow-up"
-                  alt="Monter"
+                <button
+                  className={styles.minibutton}
                   onClick={(e) => HandleMoveUp(e, menu.id)}
-                ></i>
+                >
+                  <i className="fas fa-arrow-up" alt="Monter"></i>
+                </button>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <i
-                  className="fas fa-arrow-down"
-                  alt="Descendre"
+                <button
+                  className={styles.minibutton}
                   onClick={(e) => HandleMoveDown(e, menu.id)}
-                ></i>
+                >
+                  <i className="fas fa-arrow-down" alt="Descendre"></i>
+                </button>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <i
-                  className="fas fa-remove"
-                  alt="Supprimer"
+                <button
+                  className={styles.minibutton_red}
                   onClick={(e) => HandleRemove(e, menu.id)}
-                ></i>
+                >
+                  <i className="fas fa-remove" alt="Supprimer"></i>
+                </button>
               </p>
             </li>
           );

@@ -49,3 +49,25 @@
   font-size: 16px;
   border-radius: 12px;
 }
+
+.minibutton {
+  background-color: var(--color-dark--2); /* black */
+  border: 2px solid #888;
+  color: white;
+  padding: 8px 10px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 12px;
+  border-radius: 6px;
+}
+
+.minibutton_red {
+  background-color: #880000; /* black */
+  border: 2px solid #888;
+  color: white;
+  padding: 8px 10px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 12px;
+  border-radius: 6px;
+}
