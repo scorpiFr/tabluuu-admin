@@ -6,6 +6,8 @@ import Header from "../components/Header";
 import {
   fetchDynamicMenus,
   setDynamicMenuSelected,
+  moveupDynamicMenu,
+  movedownDynamicMenu,
   deleteDynamicMenu,
 } from "../components/DynamicMenusApiRequest";
 
@@ -24,9 +26,11 @@ export default function Mescartes({ session, dispatchSession }) {
     }
   }, [session]);
 
-  async function handleFetchDynamicMenus() {
+  async function handleFetchDynamicMenus(changeReload = true) {
     // inits
-    setIsLoading(true);
+    if (changeReload) {
+      setIsLoading(true);
+    }
     setError("");
 
     // fetch data
@@ -45,13 +49,15 @@ export default function Mescartes({ session, dispatchSession }) {
     setDynamicMenus(data);
 
     // return
-    setIsLoading(false);
+    if (changeReload) {
+      setIsLoading(false);
+    }
     setError("");
   }
   async function handleChangeSelected(e, id) {
     // inits
     e.preventDefault();
-    setIsLoading(true);
+    // setIsLoading(true);
     // set status action
     const { status } = await setDynamicMenuSelected(session.token, id);
     // error management
@@ -61,16 +67,16 @@ export default function Mescartes({ session, dispatchSession }) {
       navigate("/login");
     }
     // reload list
-    await handleFetchDynamicMenus();
+    await handleFetchDynamicMenus(false);
     // return
-    setIsLoading(false);
+    // setIsLoading(false);
     setError("");
   }
 
   async function HandleRemove(e, id) {
     // inits
     e.preventDefault();
-    setIsLoading(true);
+    // setIsLoading(true);
     // set status action
     const { status } = await deleteDynamicMenu(session.token, id);
     // error management
@@ -80,9 +86,47 @@ export default function Mescartes({ session, dispatchSession }) {
       navigate("/login");
     }
     // reload list
-    await handleFetchDynamicMenus();
+    await handleFetchDynamicMenus(false);
     // return
-    setIsLoading(false);
+    // setIsLoading(false);
+    setError("");
+  }
+
+  async function HandleMoveUp(e, id) {
+    // inits
+    e.preventDefault();
+    // setIsLoading(true);
+    // set status action
+    const { status } = await moveupDynamicMenu(session.token, id);
+    // error management
+    if (status == 401) {
+      setIsLoading(false);
+      dispatchSession("reset");
+      navigate("/login");
+    }
+    // reload list
+    await handleFetchDynamicMenus(false);
+    // return
+    // setIsLoading(false);
+    setError("");
+  }
+
+  async function HandleMoveDown(e, id) {
+    // inits
+    e.preventDefault();
+    // setIsLoading(true);
+    // set status action
+    const { status } = await movedownDynamicMenu(session.token, id);
+    // error management
+    if (status == 401) {
+      setIsLoading(false);
+      dispatchSession("reset");
+      navigate("/login");
+    }
+    // reload list
+    await handleFetchDynamicMenus(false);
+    // return
+    // setIsLoading(false);
     setError("");
   }
 
@@ -92,9 +136,19 @@ export default function Mescartes({ session, dispatchSession }) {
 
   if (isLoading) {
     return (
-      <center>
-        <HashLoader color={"#000"} size="200px" />
-      </center>
+      <div className="centerDiv">
+        <Header />
+        <p>&nbsp;</p>
+        <button
+          className={styles.ctabutton}
+          onClick={(e) => HandleNewDynamicMenu(e)}
+        >
+          + Ajouter une carte
+        </button>
+        <center>
+          <HashLoader color={"#000"} size="200px" />
+        </center>
+      </div>
     );
   }
   if (!dynamicMenus.length) {
@@ -143,6 +197,18 @@ export default function Mescartes({ session, dispatchSession }) {
                 <NavLink to={`/dynamicmenu/edit/${menu.id}`}>
                   <i className="fas fa-edit" alt="Modifier"></i>
                 </NavLink>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <i
+                  className="fas fa-arrow-up"
+                  alt="Monter"
+                  onClick={(e) => HandleMoveUp(e, menu.id)}
+                ></i>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <i
+                  className="fas fa-arrow-down"
+                  alt="Descendre"
+                  onClick={(e) => HandleMoveDown(e, menu.id)}
+                ></i>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <i
                   className="fas fa-remove"

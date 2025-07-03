@@ -71,6 +71,11 @@ export default function DynamicMenuEdit({ session, dispatchSession }) {
     return false;
   }
 
+  function HandleBack(e) {
+    e.preventDefault();
+    navigate("/mescartes");
+  }
+
   return (
     <div className="centerDiv">
       <Header />
@@ -92,12 +97,20 @@ export default function DynamicMenuEdit({ session, dispatchSession }) {
             </center>
           )}
           {!isLoading && (
-            <button
-              className={styles.ctabutton}
-              onClick={(e) => HandleSubmit(e)}
-            >
-              Envoyer
-            </button>
+            <>
+              <button
+                className={styles.backbutton}
+                onClick={(e) => HandleBack(e)}
+              >
+                &lt;- Retour
+              </button>
+              <button
+                className={styles.ctabutton}
+                onClick={(e) => HandleSubmit(e)}
+              >
+                Envoyer
+              </button>
+            </>
           )}
         </div>
       </form>

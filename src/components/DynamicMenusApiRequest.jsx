@@ -95,6 +95,44 @@ async function updateDynamicMenu(token, id, nom) {
   }
 }
 
+async function moveupDynamicMenu(token, id) {
+  const inputs = {};
+  const inputData = new URLSearchParams(inputs);
+  const url = Config.tabluuu_server_url + "/admin/dynamicmenu/moveup/" + id;
+  const headers = {
+    "Content-Type": "application/x-www-form-urlencoded",
+    Authorization: token,
+  };
+  try {
+    const response = await axios.patch(url, inputData, {
+      headers: headers,
+    });
+    return { status: response.status };
+  } catch (error) {
+    console.log(error);
+    return { status: error.response.status };
+  }
+}
+
+async function movedownDynamicMenu(token, id) {
+  const inputs = {};
+  const inputData = new URLSearchParams(inputs);
+  const url = Config.tabluuu_server_url + "/admin/dynamicmenu/movedown/" + id;
+  const headers = {
+    "Content-Type": "application/x-www-form-urlencoded",
+    Authorization: token,
+  };
+  try {
+    const response = await axios.patch(url, inputData, {
+      headers: headers,
+    });
+    return { status: response.status };
+  } catch (error) {
+    console.log(error);
+    return { status: error.response.status };
+  }
+}
+
 async function deleteDynamicMenu(token, id) {
   const url = Config.tabluuu_server_url + "/admin/dynamicmenu/" + id;
   const headers = {
@@ -117,5 +155,7 @@ export {
   createDynamicMenus,
   setDynamicMenuSelected,
   updateDynamicMenu,
+  moveupDynamicMenu,
+  movedownDynamicMenu,
   deleteDynamicMenu,
 };
