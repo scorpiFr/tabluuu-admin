@@ -81,7 +81,7 @@ export default function DynamicMenuEdit({ session, dispatchSession }) {
       <Header />
       <form className={styles.form}>
         <div className={styles.row}>
-          <label htmlFor="nom">Nom de la nouvelle carte</label>
+          <label htmlFor="nom">Nom de la carte</label>
           <input
             type="text"
             id="nom"
