@@ -5,7 +5,9 @@ import useSession from "./components/UseSession";
 import Moncompte from "./pages/Moncompte";
 import Login from "./pages/Login";
 import ChangePassword from "./pages/ChangePassword";
+import Mescartes from "./pages/Mescartes";
 import Logout from "./pages/Logout";
+import NewDynamicMenu from "./pages/NewDynamicMenu";
 import "./App.css";
 
 export default function App() {
@@ -37,11 +39,26 @@ export default function App() {
             />
           }
         />
-        <Route path="/mescartes" element={<p>test</p>} />
+        <Route
+          path="/mescartes"
+          element={
+            <Mescartes session={session} dispatchSession={dispatchSession} />
+          }
+        />
         <Route
           path="/logout"
           element={
             <Logout session={session} dispatchSession={dispatchSession} />
+          }
+        />
+
+        <Route
+          path="/newDynamicMenu"
+          element={
+            <NewDynamicMenu
+              session={session}
+              dispatchSession={dispatchSession}
+            />
           }
         />
       </Routes>

@@ -55,6 +55,10 @@ textarea {
   transition: all 0.2s;
 }
 
+input[type="radio"] {
+  width: auto;
+}
+
 input:focus {
   outline: none;
   background-color: #fff;
@@ -100,7 +104,8 @@ input:focus {
   font-size: 1.6rem;
 }
 
-.tab a {
+.tab a,
+.tab p {
   color: #fff;
   text-decoration: none;
 }
