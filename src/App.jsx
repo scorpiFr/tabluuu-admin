@@ -12,6 +12,7 @@ import DynamicMenuEdit from "./pages/DynamicMenuEdit";
 import DynamicMenuRead from "./pages/DynamicMenuRead";
 import SectionNew from "./pages/SectionNew";
 import SectionEdit from "./pages/SectionEdit";
+import ItemNew from "./pages/ItemNew";
 
 import "./App.css";
 
@@ -93,6 +94,12 @@ export default function App() {
           path="/section/edit/:id"
           element={
             <SectionEdit session={session} dispatchSession={dispatchSession} />
+          }
+        />
+        <Route
+          path="/item/new/:iddynamicmenu/:idsection"
+          element={
+            <ItemNew session={session} dispatchSession={dispatchSession} />
           }
         />
       </Routes>

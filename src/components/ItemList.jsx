@@ -83,9 +83,6 @@ export default function ItemList({ session, dispatchSession, section }) {
       session.token,
       section.id
     );
-    if (data.length > 0) {
-      console.log(status, data);
-    }
     // error management
     if (status == 401) {
       setIsLoading(false);
@@ -102,6 +99,13 @@ export default function ItemList({ session, dispatchSession, section }) {
     setError("");
   }
 
+  function HandleNewItem(e) {
+    // inits
+    e.preventDefault();
+    // rerdirection
+    navigate(`/item/new/${section.dynamic_menu_id}/${section.id}`);
+    return false;
+  }
   // verify session & get etablissement
   let navigate = useNavigate();
   useEffect(() => {

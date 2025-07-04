@@ -51,14 +51,16 @@ async function deleteItem(token, id) {
     return { status: error.response.status };
   }
 }
-/*
-async function createSection(token, dynamicmenuId, nom) {
+
+async function createItem(token, sectionId, nom, prix, description) {
   const inputs = {
-    dynamic_menu_id: dynamicmenuId,
+    section_id: sectionId,
     nom: nom,
+    prix: prix,
+    description: description,
   };
   const inputData = new URLSearchParams(inputs);
-  const url = Config.tabluuu_server_url + "/admin/section";
+  const url = Config.tabluuu_server_url + "/admin/item";
   const headers = {
     "Content-Type": "application/x-www-form-urlencoded",
     Authorization: token,
@@ -74,20 +76,7 @@ async function createSection(token, dynamicmenuId, nom) {
   }
 }
 
-async function fetchSection(id, token) {
-  try {
-    const url = Config.tabluuu_server_url + "/admin/section/" + id;
-    const response = await axios.get(url, {
-      headers: {
-        Authorization: token,
-      },
-    });
-    return { status: response.status, data: response.data };
-  } catch (error) {
-    console.log(error);
-    return { status: error.response.status, data: error.response.statusText };
-  }
-}
+/*
 
 async function moveupSection(token, id) {
   const inputs = {};
@@ -129,4 +118,4 @@ async function movedownSection(token, id) {
 
 
   */
-export { listItemsFromSectionId, updateItem, deleteItem };
+export { listItemsFromSectionId, updateItem, deleteItem, createItem };
