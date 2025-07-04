@@ -10,6 +10,7 @@ import {
   moveupSection,
   movedownSection,
 } from "../components/SectionApiRequest";
+import ItemList from "../components/ItemList";
 
 export default function DynamicMenuRead({ session, dispatchSession }) {
   const [sections, setSections] = useState([]);
@@ -178,11 +179,11 @@ export default function DynamicMenuRead({ session, dispatchSession }) {
         + Ajouter une section
       </button>
       <p>&nbsp;</p>
-      <ul>
+      <ul className="no-bullets">
         {sections.map((section) => {
           return (
-            <li className="tab" key={section.id}>
-              <p>
+            <li key={section.id}>
+              <p className="tab">
                 {section.nom}
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <button
@@ -213,6 +214,14 @@ export default function DynamicMenuRead({ session, dispatchSession }) {
                   <i className="fas fa-remove" alt="Supprimer"></i>
                 </button>
               </p>
+              <div>
+                <ItemList
+                  session={session}
+                  dispatchSession={dispatchSession}
+                  section={section}
+                  key={section.id}
+                />
+              </div>
             </li>
           );
         })}
