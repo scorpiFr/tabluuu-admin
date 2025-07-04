@@ -9,6 +9,8 @@ import {
   listItemsFromSectionId,
   updateItem,
   deleteItem,
+  moveupItem,
+  movedownItem,
 } from "../components/ItemApiRequest";
 
 export default function ItemList({ session, dispatchSession, section }) {
@@ -32,6 +34,30 @@ export default function ItemList({ session, dispatchSession, section }) {
     }
   }
 
+  async function handleMoveup(id) {
+    const { status } = await movedownItem(session.token, id);
+    // error management
+    if (status == 401) {
+      setIsLoading(false);
+      dispatchSession("reset");
+      navigate("/login");
+    }
+    // reload without loadin spinner
+    handleFetchItems(false);
+  }
+
+  async function handleMovedown(id) {
+    const { status } = await moveupItem(session.token, id);
+    // error management
+    if (status == 401) {
+      setIsLoading(false);
+      dispatchSession("reset");
+      navigate("/login");
+    }
+    // reload without loadin spinner
+    handleFetchItems(false);
+  }
+
   function itemReducer(currState, action) {
     let res = "";
     let itemId = 0;
@@ -45,6 +71,12 @@ export default function ItemList({ session, dispatchSession, section }) {
         return res;
       case "set":
         return action.payload;
+      case "moveup":
+        handleMoveup(action.payload);
+        return currState;
+      case "movedown":
+        handleMovedown(action.payload);
+        return currState;
       case "updateItem":
         res = currState.map(function (item) {
           if (item.id != action.payload.id) {

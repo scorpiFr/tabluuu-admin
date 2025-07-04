@@ -40,6 +40,18 @@ export default function Item({ item, itemDispatcher }) {
     return false;
   }
 
+  function HandleMoveUp(e, id) {
+    e.preventDefault();
+    itemDispatcher({ type: "moveup", payload: id });
+    return false;
+  }
+
+  function HandleMoveDown(e, id) {
+    e.preventDefault();
+    itemDispatcher({ type: "movedown", payload: id });
+    return false;
+  }
+
   if (isEditMode) {
     return (
       <div className="centerDiv grid-colonne">

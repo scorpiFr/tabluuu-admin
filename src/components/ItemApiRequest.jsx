@@ -76,12 +76,10 @@ async function createItem(token, sectionId, nom, prix, description) {
   }
 }
 
-/*
-
-async function moveupSection(token, id) {
+async function moveupItem(token, id) {
   const inputs = {};
   const inputData = new URLSearchParams(inputs);
-  const url = Config.tabluuu_server_url + "/admin/section/moveup/" + id;
+  const url = Config.tabluuu_server_url + "/admin/item/moveup/" + id;
   const headers = {
     "Content-Type": "application/x-www-form-urlencoded",
     Authorization: token,
@@ -97,10 +95,10 @@ async function moveupSection(token, id) {
   }
 }
 
-async function movedownSection(token, id) {
+async function movedownItem(token, id) {
   const inputs = {};
   const inputData = new URLSearchParams(inputs);
-  const url = Config.tabluuu_server_url + "/admin/section/movedown/" + id;
+  const url = Config.tabluuu_server_url + "/admin/item/movedown/" + id;
   const headers = {
     "Content-Type": "application/x-www-form-urlencoded",
     Authorization: token,
@@ -116,6 +114,11 @@ async function movedownSection(token, id) {
   }
 }
 
-
-  */
-export { listItemsFromSectionId, updateItem, deleteItem, createItem };
+export {
+  listItemsFromSectionId,
+  updateItem,
+  deleteItem,
+  createItem,
+  moveupItem,
+  movedownItem,
+};
