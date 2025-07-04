@@ -13,6 +13,12 @@ export default function Item({ item, itemDispatcher }) {
     return false;
   }
 
+  function HandleRemove(e, itemId) {
+    e.preventDefault();
+    itemDispatcher({ type: "deleteOne", payload: itemId });
+    return false;
+  }
+
   function handlePrix(value) {
     value = value.trim().replace(",", ".");
     setPrix(value);
@@ -23,6 +29,7 @@ export default function Item({ item, itemDispatcher }) {
     setDescription(item.description);
     setPrix(item.prix);
     setIsEditMode(false);
+    return false;
   }
 
   function HandleConfirm(e) {
@@ -30,6 +37,7 @@ export default function Item({ item, itemDispatcher }) {
     const newItem = { id: item.id, nom, prix, description };
     itemDispatcher({ type: "updateItem", payload: newItem });
     setIsEditMode(false);
+    return false;
   }
 
   if (isEditMode) {

@@ -36,6 +36,21 @@ async function updateItem(token, id, nom, prix, description) {
   }
 }
 
+async function deleteItem(token, id) {
+  const url = Config.tabluuu_server_url + "/admin/item/" + id;
+  const headers = {
+    Authorization: token,
+  };
+  try {
+    const response = await axios.delete(url, {
+      headers: headers,
+    });
+    return { status: response.status };
+  } catch (error) {
+    console.log(error);
+    return { status: error.response.status };
+  }
+}
 /*
 async function createSection(token, dynamicmenuId, nom) {
   const inputs = {
@@ -112,20 +127,6 @@ async function movedownSection(token, id) {
   }
 }
 
-async function deleteSection(token, id) {
-  const url = Config.tabluuu_server_url + "/admin/section/" + id;
-  const headers = {
-    Authorization: token,
-  };
-  try {
-    const response = await axios.delete(url, {
-      headers: headers,
-    });
-    return { status: response.status };
-  } catch (error) {
-    console.log(error);
-    return { status: error.response.status };
-  }
-}
+
   */
-export { listItemsFromSectionId, updateItem };
+export { listItemsFromSectionId, updateItem, deleteItem };

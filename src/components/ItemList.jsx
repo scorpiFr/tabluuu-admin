@@ -8,6 +8,7 @@ import Item from "./Item";
 import {
   listItemsFromSectionId,
   updateItem,
+  deleteItem,
 } from "../components/ItemApiRequest";
 
 export default function ItemList({ session, dispatchSession, section }) {
@@ -33,13 +34,15 @@ export default function ItemList({ session, dispatchSession, section }) {
 
   function itemReducer(currState, action) {
     let res = "";
+    let itemId = 0;
     switch (action.type) {
-      case "add":
-        return {};
-      case "remove":
-        return {};
-      case "change":
-        return action.payload;
+      case "deleteOne":
+        itemId = action.payload;
+        // deleting item on local data
+        res = currState.filter((item) => item.id != itemId);
+        // deleting item on remote data
+        deleteItem(session.token, itemId);
+        return res;
       case "set":
         return action.payload;
       case "updateItem":
