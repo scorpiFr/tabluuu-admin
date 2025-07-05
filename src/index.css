@@ -137,3 +137,18 @@ input:focus {
   font-weight: bold;
   font-size: 1.2rem;
 }
+
+.qrCodeImage {
+  width: 74mm;
+  max-width: 74mm;
+  height: 105mm;
+  max-height: 105mm;
+}
+
+.qrcodes td {
+  text-align: center;
+}
+
+.qrcodes p {
+  font-size: 1.5rem;
+}

@@ -13,7 +13,7 @@ import DynamicMenuRead from "./pages/DynamicMenuRead";
 import SectionNew from "./pages/SectionNew";
 import SectionEdit from "./pages/SectionEdit";
 import ItemNew from "./pages/ItemNew";
-
+import MesQrCodes from "./pages/MesQrCodes";
 import "./App.css";
 
 export default function App() {
@@ -51,12 +51,17 @@ export default function App() {
           }
         />
         <Route
+          path="/mesqrcodes"
+          element={
+            <MesQrCodes session={session} dispatchSession={dispatchSession} />
+          }
+        />
+        <Route
           path="/logout"
           element={
             <Logout session={session} dispatchSession={dispatchSession} />
           }
         />
-
         <Route
           path="/dynamicmenu/new"
           element={

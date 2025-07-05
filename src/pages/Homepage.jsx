@@ -19,6 +19,9 @@ export default function Homepage() {
           <NavLink to="/mescartes">Mes cartes</NavLink>
         </li>
         <li className="tab">
+          <NavLink to="/mesqrcodes">Mes QR codes</NavLink>
+        </li>
+        <li className="tab">
           <NavLink to="/logout">Logout</NavLink>
         </li>
       </ul>
