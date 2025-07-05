@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams, Link } from "react-router-dom";
 import Header from "../components/Header";
-import styles from "./Login.module.css";
+// import styles from "./Login.module.css";
 import { HashLoader } from "react-spinners";
 import { fetchEtablissement } from "../components/EtablissementApiRequests";
 import Config from "../components/Config.jsx";
