@@ -13,7 +13,10 @@ async function listItemsFromSectionId(token, sectionId) {
     return { status: response.status, data: response.data };
   } catch (error) {
     console.log(error);
-    return { status: error.response.status, data: error.response.statusText };
+    return {
+      status: error.response?.status || 500,
+      data: error.response?.statusText || "",
+    };
   }
 }
 
@@ -32,7 +35,7 @@ async function updateItem(token, id, nom, prix, description) {
     return { status: response.status };
   } catch (error) {
     console.log(error);
-    return { status: error.response.status };
+    return { status: error.response?.status || 500 };
   }
 }
 
@@ -48,7 +51,7 @@ async function deleteItem(token, id) {
     return { status: response.status };
   } catch (error) {
     console.log(error);
-    return { status: error.response.status };
+    return { status: error.response?.status || 500 };
   }
 }
 
@@ -72,7 +75,10 @@ async function createItem(token, sectionId, nom, prix, description) {
     return { status: response.status, data: response.data };
   } catch (error) {
     console.log(error);
-    return { status: error.response.status, data: error.response.statusText };
+    return {
+      status: error.response?.status || 500,
+      data: error.response?.statusText || "",
+    };
   }
 }
 
@@ -91,7 +97,7 @@ async function moveupItem(token, id) {
     return { status: response.status };
   } catch (error) {
     console.log(error);
-    return { status: error.response.status };
+    return { status: error.response?.status || 500 };
   }
 }
 
@@ -110,7 +116,29 @@ async function movedownItem(token, id) {
     return { status: response.status };
   } catch (error) {
     console.log(error);
-    return { status: error.response.status };
+    return { status: error.response?.status || 500 };
+  }
+}
+
+async function setImageItem(token, id, imageFile) {
+  const formData = new FormData();
+  formData.append("image", imageFile);
+  const url = Config.tabluuu_server_url + "/admin/item/setimage/" + id;
+  const headers = {
+    "Content-Type": "multipart/form-data",
+    Authorization: token,
+  };
+  try {
+    const response = await axios.patch(url, formData, {
+      headers: headers,
+    });
+    return { status: response.status, data: response.data };
+  } catch (error) {
+    console.log(error);
+    return {
+      status: error.response?.status || 500,
+      data: error.response?.data || {},
+    };
   }
 }
 
@@ -121,4 +149,5 @@ export {
   createItem,
   moveupItem,
   movedownItem,
+  setImageItem,
 };

@@ -11,6 +11,7 @@ import {
   deleteItem,
   moveupItem,
   movedownItem,
+  setImageItem,
 } from "../components/ItemApiRequest";
 
 export default function ItemList({ session, dispatchSession, section }) {
@@ -42,7 +43,7 @@ export default function ItemList({ session, dispatchSession, section }) {
       dispatchSession("reset");
       navigate("/login");
     }
-    // reload without loadin spinner
+    // reload without loading spinner
     handleFetchItems(false);
   }
 
@@ -54,8 +55,25 @@ export default function ItemList({ session, dispatchSession, section }) {
       dispatchSession("reset");
       navigate("/login");
     }
-    // reload without loadin spinner
-    handleFetchItems(false);
+    // reload with loading spinner
+    handleFetchItems(true);
+  }
+
+  async function handleSetImage(id, image) {
+    const { status, data } = await setImageItem(session.token, id, image);
+    // error management
+    if (status == 401) {
+      setIsLoading(false);
+      dispatchSession("reset");
+      navigate("/login");
+    }
+    // local update item
+    if (status == 200) {
+      const newItems = items.map((oldItem) => {
+        return oldItem.id !== data.item.id ? oldItem : data.item;
+      });
+      itemDispatcher({ type: "set", payload: newItems });
+    }
   }
 
   function itemReducer(currState, action) {
@@ -99,6 +117,9 @@ export default function ItemList({ session, dispatchSession, section }) {
         );
         // return
         return res;
+      case "HandleSetImage":
+        handleSetImage(action.payload.id, action.payload.image);
+        return currState;
       default:
         return currState;
     }
