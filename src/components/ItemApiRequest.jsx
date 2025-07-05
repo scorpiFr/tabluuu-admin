@@ -142,6 +142,28 @@ async function setImageItem(token, id, imageFile) {
   }
 }
 
+async function removeImageItem(token, id) {
+  const inputs = {};
+  const inputData = new URLSearchParams(inputs);
+  const url = Config.tabluuu_server_url + "/admin/item/removeimage/" + id;
+  const headers = {
+    "Content-Type": "application/x-www-form-urlencoded",
+    Authorization: token,
+  };
+  try {
+    const response = await axios.patch(url, inputData, {
+      headers: headers,
+    });
+    return { status: response.status, data: response.data };
+  } catch (error) {
+    console.log(error);
+    return {
+      status: error.response?.status || 500,
+      data: error.response?.data || {},
+    };
+  }
+}
+
 export {
   listItemsFromSectionId,
   updateItem,
@@ -150,4 +172,5 @@ export {
   moveupItem,
   movedownItem,
   setImageItem,
+  removeImageItem,
 };

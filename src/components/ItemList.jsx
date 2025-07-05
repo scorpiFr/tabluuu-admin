@@ -1,5 +1,5 @@
 import { useEffect, useState, useReducer } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { HashLoader } from "react-spinners";
 import styles from "../pages/Login.module.css";
@@ -12,6 +12,7 @@ import {
   moveupItem,
   movedownItem,
   setImageItem,
+  removeImageItem,
 } from "../components/ItemApiRequest";
 
 export default function ItemList({ session, dispatchSession, section }) {
@@ -68,7 +69,24 @@ export default function ItemList({ session, dispatchSession, section }) {
       navigate("/login");
     }
     // local update item
-    if (status == 200) {
+    if (status == 200 && data.item) {
+      const newItems = items.map((oldItem) => {
+        return oldItem.id !== data.item.id ? oldItem : data.item;
+      });
+      itemDispatcher({ type: "set", payload: newItems });
+    }
+  }
+
+  async function handleRemoveImage(id) {
+    const { status, data } = await removeImageItem(session.token, id);
+    // error management
+    if (status == 401) {
+      setIsLoading(false);
+      dispatchSession("reset");
+      navigate("/login");
+    }
+    // local update item
+    if (status == 200 && data.item) {
       const newItems = items.map((oldItem) => {
         return oldItem.id !== data.item.id ? oldItem : data.item;
       });
@@ -119,6 +137,9 @@ export default function ItemList({ session, dispatchSession, section }) {
         return res;
       case "HandleSetImage":
         handleSetImage(action.payload.id, action.payload.image);
+        return currState;
+      case "HandleRemoveImage":
+        handleRemoveImage(action.payload);
         return currState;
       default:
         return currState;

@@ -95,6 +95,15 @@ export default function Item({ item, itemDispatcher }) {
     }
   }
 
+  function HandleRemoveImage(e, id) {
+    e.preventDefault();
+    itemDispatcher({ type: "HandleRemoveImage", payload: id });
+    // return
+    setIsEditImageMode(false);
+    setIsLoading(false);
+    return false;
+  }
+
   if (isLoading) {
     return (
       <center>
@@ -137,6 +146,14 @@ export default function Item({ item, itemDispatcher }) {
             >
               Envoyer
             </button>
+            {item.thumbnail && (
+              <button
+                className={styles.minibutton_red}
+                onClick={(e) => HandleRemoveImage(e, item.id)}
+              >
+                <i className="fas fa-remove" alt="Supprimer l'image"></i>
+              </button>
+            )}
           </div>
         </form>
       </div>
