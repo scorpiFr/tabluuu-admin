@@ -1,15 +1,25 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams, Link } from "react-router-dom";
 import Header from "../components/Header";
-// import styles from "./Login.module.css";
+import styles from "./Login.module.css";
 import { HashLoader } from "react-spinners";
 import { fetchEtablissement } from "../components/EtablissementApiRequests";
 import Config from "../components/Config.jsx";
+
+function QrCodeCell({ linkPrefix, cpt, isNameVisible }) {
+  return (
+    <>
+      {isNameVisible && <p>table_{cpt}</p>}
+      <img className="qrCodeImage" src={`${linkPrefix}${cpt}`} alt="Qrcode" />
+    </>
+  );
+}
 
 export default function MesQrCodes({ session, dispatchSession }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const [isLoading, setIsLoading] = useState(true);
   const [etalissement, setEtalissement] = useState(null);
+  const [isNameVisible, setIsNameVisible] = useState(true);
 
   async function handleFetchEtalissement() {
     // inits
@@ -62,91 +72,108 @@ export default function MesQrCodes({ session, dispatchSession }) {
     return (
       <center className="qrcodes">
         <Header />
-        <h1>Mes QR codes</h1>
+        <h1>
+          Mes QR codes&nbsp;&nbsp;
+          {isNameVisible && (
+            <button
+              className={styles.minibutton}
+              onClick={() => setIsNameVisible(false)}
+            >
+              Supprimer les titres
+            </button>
+          )}
+          {!isNameVisible && (
+            <button
+              className={styles.minibutton}
+              onClick={() => setIsNameVisible(true)}
+            >
+              Remettre les titres
+            </button>
+          )}
+        </h1>
         <p>
           &lt; {page == 1 ? "1" : <Link to={`/mesqrcodes?page=1`}>1</Link>} -
           {page == 2 ? "2" : <Link to={`/mesqrcodes?page=2`}>2</Link>} -
           {page == 3 ? "3" : <Link to={`/mesqrcodes?page=3`}>3</Link>} -
-          {page == 4 ? "4" : <Link to={`/mesqrcodes?page=4`}>4</Link>}
-          &gt;
+          {page == 4 ? "4" : <Link to={`/mesqrcodes?page=4`}>4</Link>} &gt;
         </p>
         <table>
           <tbody>
             <tr>
               <td>
-                <p>table_{cpt + 1}</p>
-                <img
-                  className="qrCodeImage"
-                  src={`${link}${cpt + 1}`}
-                  alt="Qrcode"
+                <QrCodeCell
+                  cpt={cpt + 1}
+                  key={cpt + 1}
+                  linkPrefix={link}
+                  isNameVisible={isNameVisible}
                 />
               </td>
               <td>
-                <p>table_{cpt + 2}</p>
-                <img
-                  className="qrCodeImage"
-                  src={`${link}${cpt + 2}`}
-                  alt="Qrcode"
+                <QrCodeCell
+                  cpt={cpt + 2}
+                  key={cpt + 2}
+                  linkPrefix={link}
+                  isNameVisible={isNameVisible}
                 />
               </td>
               <td>
-                <p>table_{cpt + 3}</p>
-                <img
-                  className="qrCodeImage"
-                  src={`${link}${cpt + 3}`}
-                  alt="Qrcode"
-                />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <p>table_{cpt + 4}</p>
-                <img
-                  className="qrCodeImage"
-                  src={`${link}${cpt + 4}`}
-                  alt="Qrcode"
-                />
-              </td>
-              <td>
-                <p>table_{cpt + 5}</p>
-                <img
-                  className="qrCodeImage"
-                  src={`${link}${cpt + 5}`}
-                  alt="Qrcode"
-                />
-              </td>
-              <td>
-                <p>table_{cpt + 6}</p>
-                <img
-                  className="qrCodeImage"
-                  src={`${link}${cpt + 6}`}
-                  alt="Qrcode"
+                <QrCodeCell
+                  cpt={cpt + 3}
+                  key={cpt + 3}
+                  linkPrefix={link}
+                  isNameVisible={isNameVisible}
                 />
               </td>
             </tr>
             <tr>
               <td>
-                <p>table_{cpt + 7}</p>
-                <img
-                  className="qrCodeImage"
-                  src={`${link}${cpt + 7}`}
-                  alt="Qrcode"
+                <QrCodeCell
+                  cpt={cpt + 4}
+                  key={cpt + 4}
+                  linkPrefix={link}
+                  isNameVisible={isNameVisible}
                 />
               </td>
               <td>
-                <p>table_{cpt + 8}</p>
-                <img
-                  className="qrCodeImage"
-                  src={`${link}${cpt + 8}`}
-                  alt="Qrcode"
+                <QrCodeCell
+                  cpt={cpt + 5}
+                  key={cpt + 5}
+                  linkPrefix={link}
+                  isNameVisible={isNameVisible}
                 />
               </td>
               <td>
-                <p>table_{cpt + 9}</p>
-                <img
-                  className="qrCodeImage"
-                  src={`${link}${cpt + 9}`}
-                  alt="Qrcode"
+                <QrCodeCell
+                  cpt={cpt + 6}
+                  key={cpt + 6}
+                  linkPrefix={link}
+                  isNameVisible={isNameVisible}
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <QrCodeCell
+                  cpt={cpt + 7}
+                  key={cpt + 7}
+                  linkPrefix={link}
+                  isNameVisible={isNameVisible}
+                />
+              </td>
+              <td>
+                <QrCodeCell
+                  cpt={cpt + 8}
+                  key={cpt + 8}
+                  linkPrefix={link}
+                  isNameVisible={isNameVisible}
+                />
+              </td>
+              <td>
+                <QrCodeCell
+                  cpt={cpt + 9}
+                  key={cpt + 9}
+                  linkPrefix={link}
+                  isNameVisible={isNameVisible}
                 />
               </td>
             </tr>
