@@ -11,6 +11,8 @@ import {
   deleteDynamicMenu,
 } from "../components/DynamicMenusApiRequest";
 
+import { fetchEtablissement } from "../components/EtablissementApiRequests";
+
 export default function Mescartes({ session, dispatchSession }) {
   const [dynamicMenus, setDynamicMenus] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -22,9 +24,29 @@ export default function Mescartes({ session, dispatchSession }) {
     if (!session) {
       navigate("/login");
     } else {
+      handleFetchEtablissement();
       handleFetchDynamicMenus();
     }
   }, [session]);
+
+  async function handleFetchEtablissement() {
+    // fetch data
+    const { status, data } = await fetchEtablissement(
+      session.etablissement_id,
+      session.token
+    );
+    // error management
+    if (status == 401) {
+      navigate("/login");
+      return false;
+    }
+    // type_contrat
+    if (data.type_contrat === "image") {
+      navigate("/mescartesstatic");
+      return false;
+    }
+    return false;
+  }
 
   async function handleFetchDynamicMenus(changeReload = true) {
     // inits
