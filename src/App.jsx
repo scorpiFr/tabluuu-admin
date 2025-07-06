@@ -14,6 +14,9 @@ import SectionNew from "./pages/SectionNew";
 import SectionEdit from "./pages/SectionEdit";
 import ItemNew from "./pages/ItemNew";
 import MesQrCodes from "./pages/MesQrCodes";
+import MescartesStatic from "./pages/MescartesStatic";
+import StaticMenuNew from "./pages/StaticMenuNew";
+import StaticMenuEdit from "./pages/StaticMenuEdit";
 import "./App.css";
 
 export default function App() {
@@ -105,6 +108,33 @@ export default function App() {
           path="/item/new/:iddynamicmenu/:idsection"
           element={
             <ItemNew session={session} dispatchSession={dispatchSession} />
+          }
+        />
+        <Route
+          path="/mescartesstatic"
+          element={
+            <MescartesStatic
+              session={session}
+              dispatchSession={dispatchSession}
+            />
+          }
+        />
+        <Route
+          path="/staticmenu/new"
+          element={
+            <StaticMenuNew
+              session={session}
+              dispatchSession={dispatchSession}
+            />
+          }
+        />
+        <Route
+          path="/staticmenu/edit/:id"
+          element={
+            <StaticMenuEdit
+              session={session}
+              dispatchSession={dispatchSession}
+            />
           }
         />
       </Routes>
