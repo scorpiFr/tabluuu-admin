@@ -17,6 +17,7 @@ import MesQrCodes from "./pages/MesQrCodes";
 import MescartesStatic from "./pages/MescartesStatic";
 import StaticMenuNew from "./pages/StaticMenuNew";
 import StaticMenuEdit from "./pages/StaticMenuEdit";
+import StaticItems from "./pages/StaticItems";
 import "./App.css";
 
 export default function App() {
@@ -135,6 +136,12 @@ export default function App() {
               session={session}
               dispatchSession={dispatchSession}
             />
+          }
+        />
+        <Route
+          path="/staticitems/:staticMenuId"
+          element={
+            <StaticItems session={session} dispatchSession={dispatchSession} />
           }
         />
       </Routes>

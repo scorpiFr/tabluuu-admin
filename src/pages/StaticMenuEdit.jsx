@@ -8,7 +8,7 @@ import {
   updateStaticMenu,
 } from "../components/StaticMenusApiRequest";
 
-export default function DynamicMenuEdit({ session, dispatchSession }) {
+export default function StaticMenuEdit({ session, dispatchSession }) {
   const [nom, setNom] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");

@@ -221,7 +221,7 @@ export default function MescartesStatic({ session, dispatchSession }) {
                   onChange={(e) => handleChangeSelected(e, menu.id)}
                 />
                 &nbsp;
-                <NavLink to={`/staticmenu/read/${menu.id}`}>{menu.nom}</NavLink>
+                <NavLink to={`/staticitems/${menu.id}`}>{menu.nom}</NavLink>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <button
                   className={styles.minibutton}
