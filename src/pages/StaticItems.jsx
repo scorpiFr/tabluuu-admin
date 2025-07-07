@@ -54,10 +54,10 @@ export default function StaticItems({ session, dispatchSession }) {
       case "set":
         return action.payload;
       case "moveup":
-        handleMoveup(currState, action.payload);
+        mooveItem("up", action.payload, currState);
         return currState;
       case "movedown":
-        handleMovedown(currState, action.payload);
+        mooveItem("down", action.payload, currState);
         return currState;
       case "remove":
         return handleRemoveItem(currState, action.payload);
@@ -111,9 +111,12 @@ export default function StaticItems({ session, dispatchSession }) {
     return res;
   }
 
-  async function handleMoveup(currState, id) {
+  async function mooveItem(direction, id, currState) {
     // moveup in db
-    const { status, data } = await movedownStaticItem(session.token, id);
+    const { status, data } =
+      direction === "up"
+        ? await movedownStaticItem(session.token, id)
+        : await moveupStaticItem(session.token, id);
     // verifs
     if (status != 200) {
       return;
@@ -130,30 +133,7 @@ export default function StaticItems({ session, dispatchSession }) {
     });
     // sorting
     res = res.sort((a, b) => a.position - b.position);
-    // return
-    itemDispatcher({ type: "set", payload: res });
-  }
-
-  async function handleMovedown(currState, id) {
-    // moveup in db
-    const { status, data } = await moveupStaticItem(session.token, id);
-    // verifs
-    if (status != 200) {
-      return;
-    }
-    const [item1, item2] = data;
-    if (!item1 || !item2) {
-      return;
-    }
-    // update in local
-    let res = currState.map(function (item) {
-      if (item.id === item1.id) return item1;
-      if (item.id === item2.id) return item2;
-      return item;
-    });
-    // sorting
-    res = res.sort((a, b) => a.position - b.position);
-    // return
+    // update in dispatcher
     itemDispatcher({ type: "set", payload: res });
   }
 
