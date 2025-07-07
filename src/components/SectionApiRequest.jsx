@@ -15,7 +15,10 @@ async function fetchSections(dynMenuId, token) {
     return { status: response.status, data: response.data };
   } catch (error) {
     console.log(error);
-    return { status: error.response.status, data: error.response.statusText };
+    return {
+      status: error.response?.status || 500,
+      data: error.response?.data || {},
+    };
   }
 }
 
@@ -37,7 +40,10 @@ async function createSection(token, dynamicmenuId, nom) {
     return { status: response.status, data: response.data };
   } catch (error) {
     console.log(error);
-    return { status: error.response.status, data: error.response.statusText };
+    return {
+      status: error.response?.status || 500,
+      data: error.response?.data || {},
+    };
   }
 }
 
@@ -52,7 +58,10 @@ async function fetchSection(id, token) {
     return { status: response.status, data: response.data };
   } catch (error) {
     console.log(error);
-    return { status: error.response.status, data: error.response.statusText };
+    return {
+      status: error.response?.status || 500,
+      data: error.response?.data || {},
+    };
   }
 }
 
@@ -71,7 +80,9 @@ async function updateSection(token, id, nom) {
     return { status: response.status };
   } catch (error) {
     console.log(error);
-    return { status: error.response.status };
+    return {
+      status: error.response?.status || 500,
+    };
   }
 }
 
@@ -87,10 +98,13 @@ async function moveupSection(token, id) {
     const response = await axios.patch(url, inputData, {
       headers: headers,
     });
-    return { status: response.status };
+    return { status: response.status, data: response.data };
   } catch (error) {
     console.log(error);
-    return { status: error.response.status };
+    return {
+      status: error.response?.status || 500,
+      data: error.response?.data || {},
+    };
   }
 }
 
@@ -106,10 +120,13 @@ async function movedownSection(token, id) {
     const response = await axios.patch(url, inputData, {
       headers: headers,
     });
-    return { status: response.status };
+    return { status: response.status, data: response.data };
   } catch (error) {
     console.log(error);
-    return { status: error.response.status };
+    return {
+      status: error.response?.status || 500,
+      data: error.response?.data || {},
+    };
   }
 }
 
@@ -125,7 +142,9 @@ async function deleteSection(token, id) {
     return { status: response.status };
   } catch (error) {
     console.log(error);
-    return { status: error.response.status };
+    return {
+      status: error.response?.status || 500,
+    };
   }
 }
 export {

@@ -65,47 +65,53 @@ export default function DynamicMenuRead({ session, dispatchSession }) {
     setError("");
   }
 
-  async function HandleMoveUp(e, sectionId) {
-    // inits
-    e.preventDefault();
-    // setIsLoading(true);
-    setError("");
-
-    // action data
-    const { status, data } = await movedownSection(session.token, sectionId);
+  async function mooveSection(direction, sectionId) {
+    // move in db
+    const { status, data } =
+      direction === "up"
+        ? await movedownSection(session.token, sectionId)
+        : await moveupSection(session.token, sectionId);
     // error management
     if (status == 401) {
       setIsLoading(false);
       dispatchSession("reset");
       navigate("/login");
     }
-    // re-fetch
-    handleFetchSections(false);
+    // verifs
+    if (status != 200) {
+      return;
+    }
+    const [section1, section2] = data;
+    if (!section1 || !section2) {
+      return;
+    }
+    // update in local
+    let res = sections.map(function (section) {
+      if (section.id === section1.id) return section1;
+      if (section.id === section2.id) return section2;
+      return section;
+    });
+    // sorting
+    res = res.sort((a, b) => a.position - b.position);
+    // update
+    setSections(res);
+  }
 
+  function HandleMoveUp(e, sectionId) {
+    // inits
+    e.preventDefault();
+    // action
+    mooveSection("up", sectionId);
     // return
-    setIsLoading(false);
     setError("");
   }
 
-  async function HandleMoveDown(e, sectionId) {
+  function HandleMoveDown(e, sectionId) {
     // inits
     e.preventDefault();
-    // setIsLoading(true);
-    setError("");
-
-    // action data
-    const { status, data } = await moveupSection(session.token, sectionId);
-    // error management
-    if (status == 401) {
-      setIsLoading(false);
-      dispatchSession("reset");
-      navigate("/login");
-    }
-    // re-fetch
-    handleFetchSections(false);
-
+    // action
+    mooveSection("down", sectionId);
     // return
-    setIsLoading(false);
     setError("");
   }
 
@@ -162,7 +168,7 @@ export default function DynamicMenuRead({ session, dispatchSession }) {
         <p>&nbsp;</p>
         <ul>
           <li className="tab">
-            <p>Aucune carte trouvée</p>
+            <p>Aucune section trouvée</p>
           </li>
         </ul>
       </div>
