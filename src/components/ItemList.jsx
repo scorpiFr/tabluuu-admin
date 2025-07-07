@@ -85,29 +85,30 @@ export default function ItemList({ session, dispatchSession, section }) {
       navigate("/login");
     }
     // local update item
-    if (status == 200 && data.item) {
+    if (status == 200 && data.id) {
       const newItems = items.map((oldItem) => {
-        return oldItem.id !== data.item.id ? oldItem : data.item;
+        return oldItem.id !== data.id ? oldItem : data;
       });
       itemDispatcher({ type: "set", payload: newItems });
     }
   }
 
-  async function handleRemoveImage(id) {
-    const { status, data } = await removeImageItem(session.token, id);
-    // error management
-    if (status == 401) {
-      setIsLoading(false);
-      dispatchSession("reset");
-      navigate("/login");
+  function handleRemoveImage(currState, id) {
+    // verifs
+    if (!currState || !currState.length) {
+      return currState;
     }
-    // local update item
-    if (status == 200 && data.item) {
-      const newItems = items.map((oldItem) => {
-        return oldItem.id !== data.item.id ? oldItem : data.item;
-      });
-      itemDispatcher({ type: "set", payload: newItems });
-    }
+    // delete local image
+    const newItems = currState.map((oldItem) => {
+      return oldItem.id !== id
+        ? oldItem
+        : { ...oldItem, image: "", thumbnail: "" };
+    });
+
+    // delete image on api
+    removeImageItem(session.token, id);
+    // return
+    return newItems;
   }
 
   function itemReducer(currState, action) {
@@ -151,12 +152,11 @@ export default function ItemList({ session, dispatchSession, section }) {
         );
         // return
         return res;
-      case "HandleSetImage":
+      case "setImage":
         handleSetImage(action.payload.id, action.payload.image);
         return currState;
-      case "HandleRemoveImage":
-        handleRemoveImage(action.payload);
-        return currState;
+      case "removeImage":
+        return handleRemoveImage(currState, action.payload);
       default:
         return currState;
     }

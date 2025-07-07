@@ -65,7 +65,7 @@ export default function Item({ item, itemDispatcher }) {
     // action
     setIsLoading(true);
     itemDispatcher({
-      type: "HandleSetImage",
+      type: "setImage",
       payload: { id: id, image: image },
     });
     // return
@@ -97,7 +97,7 @@ export default function Item({ item, itemDispatcher }) {
 
   function HandleRemoveImage(e, id) {
     e.preventDefault();
-    itemDispatcher({ type: "HandleRemoveImage", payload: id });
+    itemDispatcher({ type: "removeImage", payload: id });
     // return
     setIsEditImageMode(false);
     setIsLoading(false);
