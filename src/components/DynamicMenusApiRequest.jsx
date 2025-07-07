@@ -15,7 +15,10 @@ async function fetchDynamicMenus(etablissement_id, token) {
     return { status: response.status, data: response.data };
   } catch (error) {
     console.log(error);
-    return { status: error.response.status, data: error.response.statusText };
+    return {
+      status: error.response?.status || 500,
+      data: error.response?.data || {},
+    };
   }
 }
 
@@ -30,7 +33,10 @@ async function fetchDynamicMenu(id, token) {
     return { status: response.status, data: response.data };
   } catch (error) {
     console.log(error);
-    return { status: error.response.status, data: error.response.statusText };
+    return {
+      status: error.response?.status || 500,
+      data: error.response?.data || {},
+    };
   }
 }
 
@@ -52,7 +58,10 @@ async function createDynamicMenus(etablissement_id, token, nom) {
     return { status: response.status, data: response.data };
   } catch (error) {
     console.log(error);
-    return { status: error.response.status, data: error.response.statusText };
+    return {
+      status: error.response?.status || 500,
+      data: error.response?.data || {},
+    };
   }
 }
 
@@ -72,7 +81,9 @@ async function setDynamicMenuSelected(token, id) {
     return { status: response.status };
   } catch (error) {
     console.log(error);
-    return { status: error.response.status };
+    return {
+      status: error.response?.status || 500,
+    };
   }
 }
 
@@ -91,7 +102,9 @@ async function updateDynamicMenu(token, id, nom) {
     return { status: response.status };
   } catch (error) {
     console.log(error);
-    return { status: error.response.status };
+    return {
+      status: error.response?.status || 500,
+    };
   }
 }
 
@@ -107,10 +120,13 @@ async function moveupDynamicMenu(token, id) {
     const response = await axios.patch(url, inputData, {
       headers: headers,
     });
-    return { status: response.status };
+    return { status: response.status, data: response.data };
   } catch (error) {
     console.log(error);
-    return { status: error.response.status };
+    return {
+      status: error.response?.status || 500,
+      data: error.response?.data || {},
+    };
   }
 }
 
@@ -126,10 +142,13 @@ async function movedownDynamicMenu(token, id) {
     const response = await axios.patch(url, inputData, {
       headers: headers,
     });
-    return { status: response.status };
+    return { status: response.status, data: response.data };
   } catch (error) {
     console.log(error);
-    return { status: error.response.status };
+    return {
+      status: error.response?.status || 500,
+      data: error.response?.data || {},
+    };
   }
 }
 
@@ -145,7 +164,9 @@ async function deleteDynamicMenu(token, id) {
     return { status: response.status };
   } catch (error) {
     console.log(error);
-    return { status: error.response.status };
+    return {
+      status: error.response?.status || 500,
+    };
   }
 }
 
