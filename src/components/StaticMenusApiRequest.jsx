@@ -15,7 +15,10 @@ async function fetchStaticMenus(etablissement_id, token) {
     return { status: response.status, data: response.data };
   } catch (error) {
     console.log(error);
-    return { status: error.response.status, data: error.response.statusText };
+    return {
+      status: error.response?.status || 500,
+      data: error.response?.data || {},
+    };
   }
 }
 
@@ -30,7 +33,10 @@ async function fetchStaticMenu(id, token) {
     return { status: response.status, data: response.data };
   } catch (error) {
     console.log(error);
-    return { status: error.response.status, data: error.response.statusText };
+    return {
+      status: error.response?.status || 500,
+      data: error.response?.data || {},
+    };
   }
 }
 
@@ -52,7 +58,10 @@ async function createStaticMenus(etablissement_id, token, nom) {
     return { status: response.status, data: response.data };
   } catch (error) {
     console.log(error);
-    return { status: error.response.status, data: error.response.statusText };
+    return {
+      status: error.response?.status || 500,
+      data: error.response?.data || {},
+    };
   }
 }
 
@@ -70,8 +79,7 @@ async function updateStaticMenu(token, id, nom) {
     });
     return { status: response.status };
   } catch (error) {
-    console.log(error);
-    return { status: error.response.status };
+    return { status: error.response?.status || 500 };
   }
 }
 
@@ -90,7 +98,7 @@ async function setStaticMenuSelected(token, id) {
     return { status: response.status };
   } catch (error) {
     console.log(error);
-    return { status: error.response.status };
+    return { status: error.response?.status || 500 };
   }
 }
 
@@ -106,10 +114,13 @@ async function moveupStaticMenu(token, id) {
     const response = await axios.patch(url, inputData, {
       headers: headers,
     });
-    return { status: response.status };
+    return { status: response.status, data: response.data };
   } catch (error) {
     console.log(error);
-    return { status: error.response.status };
+    return {
+      status: error.response?.status || 500,
+      data: error.response?.data || {},
+    };
   }
 }
 
@@ -125,10 +136,13 @@ async function movedownStaticMenu(token, id) {
     const response = await axios.patch(url, inputData, {
       headers: headers,
     });
-    return { status: response.status };
+    return { status: response.status, data: response.data };
   } catch (error) {
     console.log(error);
-    return { status: error.response.status };
+    return {
+      status: error.response?.status || 500,
+      data: error.response?.data || {},
+    };
   }
 }
 
@@ -144,7 +158,7 @@ async function deleteStaticMenu(token, id) {
     return { status: response.status };
   } catch (error) {
     console.log(error);
-    return { status: error.response.status };
+    return { status: error.response?.status || 500 };
   }
 }
 

@@ -94,41 +94,54 @@ export default function MescartesStatic({ session, dispatchSession }) {
     // setIsLoading(false);
     setError("");
   }
-  async function HandleMoveUp(e, id) {
-    // inits
-    e.preventDefault();
-    // setIsLoading(true);
-    // set status action
-    const { status } = await moveupStaticMenu(session.token, id);
+
+  async function mooveMenu(direction, id) {
+    // move in db
+    const { status, data } =
+      direction === "up"
+        ? await moveupStaticMenu(session.token, id)
+        : await movedownStaticMenu(session.token, id);
     // error management
     if (status == 401) {
       setIsLoading(false);
       dispatchSession("reset");
       navigate("/login");
     }
-    // reload list
-    await handleFetchStaticMenus(false);
+    // verifs
+    if (status != 200) {
+      return;
+    }
+    const [menu1, menu2] = data;
+    if (!menu1 || !menu2) {
+      return;
+    }
+    // update in local
+    let res = staticMenus.map(function (menu) {
+      if (menu.id === menu1.id) return menu1;
+      if (menu.id === menu2.id) return menu2;
+      return menu;
+    });
+    // sorting
+    res = res.sort((a, b) => b.position - a.position);
+    // update
+    setStaticMenus(res);
+  }
+
+  async function HandleMoveUp(e, id) {
+    // inits
+    e.preventDefault();
+    // action
+    mooveMenu("up", id);
     // return
-    // setIsLoading(false);
     setError("");
   }
 
   async function HandleMoveDown(e, id) {
     // inits
     e.preventDefault();
-    // setIsLoading(true);
-    // set status action
-    const { status } = await movedownStaticMenu(session.token, id);
-    // error management
-    if (status == 401) {
-      setIsLoading(false);
-      dispatchSession("reset");
-      navigate("/login");
-    }
-    // reload list
-    await handleFetchStaticMenus(false);
+    // action
+    mooveMenu("down", id);
     // return
-    // setIsLoading(false);
     setError("");
   }
 
