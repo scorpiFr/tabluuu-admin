@@ -127,7 +127,7 @@ export default function MescartesStatic({ session, dispatchSession }) {
     setStaticMenus(res);
   }
 
-  async function HandleMoveUp(e, id) {
+  function HandleMoveUp(e, id) {
     // inits
     e.preventDefault();
     // action
@@ -136,7 +136,7 @@ export default function MescartesStatic({ session, dispatchSession }) {
     setError("");
   }
 
-  async function HandleMoveDown(e, id) {
+  function HandleMoveDown(e, id) {
     // inits
     e.preventDefault();
     // action
