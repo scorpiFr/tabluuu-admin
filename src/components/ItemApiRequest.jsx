@@ -15,7 +15,7 @@ async function listItemsFromSectionId(token, sectionId) {
     console.log(error);
     return {
       status: error.response?.status || 500,
-      data: error.response?.statusText || "",
+      data: error.response?.data || {},
     };
   }
 }
@@ -77,7 +77,7 @@ async function createItem(token, sectionId, nom, prix, description) {
     console.log(error);
     return {
       status: error.response?.status || 500,
-      data: error.response?.statusText || "",
+      data: error.response?.data || {},
     };
   }
 }
@@ -94,10 +94,13 @@ async function moveupItem(token, id) {
     const response = await axios.patch(url, inputData, {
       headers: headers,
     });
-    return { status: response.status };
+    return { status: response.status, data: response.data };
   } catch (error) {
     console.log(error);
-    return { status: error.response?.status || 500 };
+    return {
+      status: error.response?.status || 500,
+      data: error.response?.data || {},
+    };
   }
 }
 
@@ -113,10 +116,13 @@ async function movedownItem(token, id) {
     const response = await axios.patch(url, inputData, {
       headers: headers,
     });
-    return { status: response.status };
+    return { status: response.status, data: response.data };
   } catch (error) {
     console.log(error);
-    return { status: error.response?.status || 500 };
+    return {
+      status: error.response?.status || 500,
+      data: error.response?.data || {},
+    };
   }
 }
 

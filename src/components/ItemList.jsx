@@ -36,28 +36,44 @@ export default function ItemList({ session, dispatchSession, section }) {
     }
   }
 
-  async function handleMoveup(id) {
-    const { status } = await movedownItem(session.token, id);
+  async function mooveItem(direction, id) {
+    // move in db
+    const { status, data } =
+      direction === "up"
+        ? await movedownItem(session.token, id)
+        : await moveupItem(session.token, id);
     // error management
     if (status == 401) {
       setIsLoading(false);
       dispatchSession("reset");
       navigate("/login");
     }
-    // reload without loading spinner
-    handleFetchItems(false);
+    // verifs
+    if (status != 200) {
+      return;
+    }
+    const [item1, item2] = data;
+    if (!item1 || !item2) {
+      return;
+    }
+    // update in local
+    let res = items.map(function (item) {
+      if (item.id === item1.id) return item1;
+      if (item.id === item2.id) return item2;
+      return item;
+    });
+    // sorting
+    res = res.sort((a, b) => a.position - b.position);
+    // update
+    itemDispatcher({ type: "set", payload: res });
   }
 
-  async function handleMovedown(id) {
-    const { status } = await moveupItem(session.token, id);
-    // error management
-    if (status == 401) {
-      setIsLoading(false);
-      dispatchSession("reset");
-      navigate("/login");
-    }
-    // reload with loading spinner
-    handleFetchItems(true);
+  function handleMoveup(id) {
+    mooveItem("up", id);
+  }
+
+  function handleMovedown(id) {
+    mooveItem("down", id);
   }
 
   async function handleSetImage(id, image) {
