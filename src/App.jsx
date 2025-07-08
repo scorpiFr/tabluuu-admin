@@ -18,6 +18,9 @@ import MescartesStatic from "./pages/MescartesStatic";
 import StaticMenuNew from "./pages/StaticMenuNew";
 import StaticMenuEdit from "./pages/StaticMenuEdit";
 import StaticItems from "./pages/StaticItems";
+import HomepageCommercial from "./pages/HomepageCommercial";
+import EtablissementList from "./pages/EtablissementList";
+
 import "./App.css";
 
 export default function App() {
@@ -26,7 +29,15 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route index element={<Homepage />} />
+        <Route index element={<Homepage session={session} />} />
+        <Route
+          path="/homepagecommercial"
+          element={<HomepageCommercial session={session} />}
+        />
+        <Route
+          path="/etablissementlist"
+          element={<EtablissementList session={session} />}
+        />
         <Route
           path="/login"
           element={

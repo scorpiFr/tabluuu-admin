@@ -1,8 +1,9 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+
 import Header from "../components/Header";
 
-export default function Homepage({ session }) {
+export default function HomepageCommercial({ session }) {
   // verify session
   let navigate = useNavigate();
   useEffect(() => {
@@ -18,18 +19,7 @@ export default function Homepage({ session }) {
       <Header />
       <ul>
         <li className="tab">
-          <NavLink to="/moncompte" className="">
-            Mon compte
-          </NavLink>
-        </li>
-        <li className="tab">
-          <NavLink to="/motdepasse">Mon mot de passe</NavLink>
-        </li>
-        <li className="tab">
-          <NavLink to="/mescartes">Mes cartes</NavLink>
-        </li>
-        <li className="tab">
-          <NavLink to="/mesqrcodes">Mes QR codes</NavLink>
+          <NavLink to="/etablissementlist">Etablissements</NavLink>
         </li>
         <li className="tab">
           <NavLink to="/logout">Logout</NavLink>

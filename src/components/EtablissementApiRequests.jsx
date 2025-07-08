@@ -1,6 +1,22 @@
 import Config from "../components/Config.jsx";
 import axios from "axios";
 
+async function fetchEtablissements(token) {
+  // only for commercials
+  try {
+    const url = Config.tabluuu_server_url + "/admin/etablissement/";
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: token,
+      },
+    });
+    return { status: response.status, data: response.data };
+  } catch (error) {
+    console.log(error);
+    return { status: error.response.status, data: error.response.statusText };
+  }
+}
+
 async function fetchEtablissement(id, token) {
   try {
     const url = Config.tabluuu_server_url + "/admin/etablissement/" + id;
@@ -105,4 +121,5 @@ export {
   updateEtablissementForEtablissement,
   updatePassword,
   logout,
+  fetchEtablissements,
 };
