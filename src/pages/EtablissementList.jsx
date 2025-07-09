@@ -45,10 +45,17 @@ export default function EtablissementList({ session, dispatchSession }) {
     return false;
   }
 
+  function handleGotoEdit(e, id) {
+    e.preventDefault();
+    navigate("/etablissementupdate/" + id);
+    return false;
+  }
+
   if (isLoading) {
     return (
       <div className="centerDiv">
         <Header />
+        <h1>Liste des établissements</h1>
         <p>&nbsp;</p>
         <button
           className={styles.ctabutton}
@@ -66,6 +73,7 @@ export default function EtablissementList({ session, dispatchSession }) {
   return (
     <div className="centerDiv">
       <Header />
+      <h1>Liste des établissements</h1>
       <p>&nbsp;</p>
       <button
         className={styles.ctabutton}
@@ -79,6 +87,7 @@ export default function EtablissementList({ session, dispatchSession }) {
           return (
             <Etablissement
               etablissement={etablissement}
+              handleGotoEdit={handleGotoEdit}
               key={etablissement.id}
             />
           );
@@ -88,7 +97,7 @@ export default function EtablissementList({ session, dispatchSession }) {
   );
 }
 
-function Etablissement({ etablissement }) {
+function Etablissement({ etablissement, handleGotoEdit }) {
   const [seeAll, setSeeAll] = useState(false);
 
   if (seeAll) {
@@ -107,7 +116,7 @@ function Etablissement({ etablissement }) {
           &nbsp;&nbsp;&nbsp;&nbsp;
           <button
             className={styles.minibutton}
-            onClick={(e) => HandleGotoEdit(e, menu.id)}
+            onClick={(e) => handleGotoEdit(e, etablissement.id)}
           >
             <i className="fas fa-edit" alt="Modifier"></i>
           </button>
@@ -140,7 +149,7 @@ function Etablissement({ etablissement }) {
   return (
     <li className="tab2">
       <p>
-        {etablissement.type} {etablissement.id} -{" "}
+        {etablissement.type} {etablissement.id} -
         {etablissement.nom_etablissement}
         &nbsp;&nbsp;&nbsp;&nbsp;
         <button
@@ -152,7 +161,7 @@ function Etablissement({ etablissement }) {
         &nbsp;&nbsp;&nbsp;&nbsp;
         <button
           className={styles.minibutton}
-          onClick={(e) => HandleGotoEdit(e, menu.id)}
+          onClick={(e) => handleGotoEdit(e, etablissement.id)}
         >
           <i className="fas fa-edit" alt="Modifier"></i>
         </button>

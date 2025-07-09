@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { HashLoader } from "react-spinners";
 import styles from "./Login.module.css";
 import Header from "../components/Header";
-import { createEtablissement } from "../components/EtablissementApiRequests";
+import {
+  fetchEtablissement,
+  updateEtablissementForCommercials,
+} from "../components/EtablissementApiRequests";
 import ToggleSwitch from "../components/ToggleSwitch";
 
-export default function EtablissementNew({ session, dispatchSession }) {
+export default function EtablissementUpdate({ session, dispatchSession }) {
+  const [etablissement, setEtablissement] = useState(null);
   const [isAllocated, setIsAllocated] = useState(true);
   const [nomEtablissement, setNomEtablissement] = useState("");
   const [type, setType] = useState("bar");
@@ -19,8 +23,9 @@ export default function EtablissementNew({ session, dispatchSession }) {
   const [adresse, setAdresse] = useState("");
   const [tel, setTel] = useState("");
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
+  const { id } = useParams();
 
   // verify session & get etablissement
   let navigate = useNavigate();
@@ -29,8 +34,46 @@ export default function EtablissementNew({ session, dispatchSession }) {
       navigate("/login");
     } else if (session.role != "commercial") {
       navigate("/");
+    } else {
+      handleFetchEtablissement();
     }
   }, [session]);
+
+  async function handleFetchEtablissement(changeLoadinStatus = true) {
+    // inits
+    if (changeLoadinStatus) {
+      setIsLoading(true);
+    }
+    setError("");
+
+    // fetch data
+    const { status, data } = await fetchEtablissement(id, session.token);
+    // error management
+    if (status == 401) {
+      setIsLoading(false);
+      dispatchSession("reset");
+      navigate("/login");
+    }
+    // set data
+    setEtablissement(data);
+    setIsAllocated(data.is_allocated);
+    setNomEtablissement(data.nom_etablissement);
+    setType(data.type);
+    setTypeContrat(data.type_contrat);
+    setPrix(data.prix);
+    setEmailFacturation(data.email_facturation);
+    setEmailCommandes(data.email_commandes);
+    setNom(data.nom);
+    setPrenom(data.prenom);
+    setAdresse(data.adresse);
+    setTel(data.tel);
+
+    // return
+    if (changeLoadinStatus) {
+      setIsLoading(false);
+    }
+    setError("");
+  }
 
   async function HandleSubmit(e) {
     // initialisation
@@ -51,8 +94,9 @@ export default function EtablissementNew({ session, dispatchSession }) {
     // data transmit
     const isAllocated2 = isAllocated ? 1 : 0;
     // eslint-disable-next-line no-unused-vars
-    const { status, data } = await createEtablissement(
+    const { status, data } = await updateEtablissementForCommercials(
       session.token,
+      id,
       emailFacturation,
       emailCommandes,
       nomEtablissement,
@@ -116,7 +160,7 @@ export default function EtablissementNew({ session, dispatchSession }) {
   return (
     <div className="centerDiv">
       <Header />
-      <h1>Créer un établissement</h1>
+      <h1>Modifier un établissement</h1>
       <form className={styles.form}>
         <div className={styles.row}>
           <label htmlFor="isAllocated">C'est un établissement réel</label>

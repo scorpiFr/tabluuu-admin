@@ -21,6 +21,7 @@ import StaticItems from "./pages/StaticItems";
 import HomepageCommercial from "./pages/HomepageCommercial";
 import EtablissementList from "./pages/EtablissementList";
 import EtablissementNew from "./pages/EtablissementNew";
+import EtablissementUpdate from "./pages/EtablissementUpdate";
 
 import "./App.css";
 
@@ -43,6 +44,15 @@ export default function App() {
           path="/etablissementnew"
           element={
             <EtablissementNew
+              session={session}
+              dispatchSession={dispatchSession}
+            />
+          }
+        />
+        <Route
+          path="/etablissementupdate/:id"
+          element={
+            <EtablissementUpdate
               session={session}
               dispatchSession={dispatchSession}
             />
