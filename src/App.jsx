@@ -20,6 +20,7 @@ import StaticMenuEdit from "./pages/StaticMenuEdit";
 import StaticItems from "./pages/StaticItems";
 import HomepageCommercial from "./pages/HomepageCommercial";
 import EtablissementList from "./pages/EtablissementList";
+import EtablissementNew from "./pages/EtablissementNew";
 
 import "./App.css";
 
@@ -38,6 +39,16 @@ export default function App() {
           path="/etablissementlist"
           element={<EtablissementList session={session} />}
         />
+        <Route
+          path="/etablissementnew"
+          element={
+            <EtablissementNew
+              session={session}
+              dispatchSession={dispatchSession}
+            />
+          }
+        />
+
         <Route
           path="/login"
           element={

@@ -39,6 +39,12 @@ export default function EtablissementList({ session, dispatchSession }) {
     return false;
   }
 
+  function HandleNewEtablissement(e) {
+    e.preventDefault();
+    navigate("/etablissementnew");
+    return false;
+  }
+
   if (isLoading) {
     return (
       <div className="centerDiv">
@@ -46,7 +52,7 @@ export default function EtablissementList({ session, dispatchSession }) {
         <p>&nbsp;</p>
         <button
           className={styles.ctabutton}
-          onClick={(e) => HandleNewDynamicMenu(e)}
+          onClick={(e) => HandleNewEtablissement(e)}
         >
           + Ajouter un etablissement
         </button>
@@ -63,7 +69,7 @@ export default function EtablissementList({ session, dispatchSession }) {
       <p>&nbsp;</p>
       <button
         className={styles.ctabutton}
-        onClick={(e) => HandleNewDynamicMenu(e)}
+        onClick={(e) => HandleNewEtablissement(e)}
       >
         + Ajouter un etablissement
       </button>

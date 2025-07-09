@@ -100,6 +100,51 @@ async function updatePassword(etablissement_id, token, password) {
   }
 }
 
+// only for commercials
+async function createEtablissement(
+  token,
+  email_facturation,
+  email_commandes,
+  nom_etablissement,
+  type,
+  nom,
+  prenom,
+  adresse,
+  tel,
+  type_contrat,
+  prix,
+  is_allocated
+) {
+  const inputs = {
+    email_facturation,
+    email_commandes,
+    nom_etablissement,
+    type,
+    nom,
+    prenom,
+    adresse,
+    tel,
+    type_contrat,
+    prix,
+    is_allocated,
+  };
+  const inputData = new URLSearchParams(inputs);
+  const url = Config.tabluuu_server_url + "/admin/etablissement";
+  const headers = {
+    "Content-Type": "application/x-www-form-urlencoded",
+    Authorization: token,
+  };
+  try {
+    const response = await axios.post(url, inputData, {
+      headers: headers,
+    });
+    return { status: response.status, data: response.data };
+  } catch (error) {
+    console.log(error);
+    return { status: error.response.status, data: error.response.statusText };
+  }
+}
+
 async function logout(token) {
   const url = Config.tabluuu_server_url + "/admin/logout";
   const headers = {
@@ -122,4 +167,5 @@ export {
   updatePassword,
   logout,
   fetchEtablissements,
+  createEtablissement,
 };
