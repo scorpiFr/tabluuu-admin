@@ -24,6 +24,7 @@ import EtablissementNew from "./pages/EtablissementNew";
 import EtablissementUpdate from "./pages/EtablissementUpdate";
 import EtablissementBills from "./pages/EtablissementBills";
 import BillNew from "./pages/BillNew";
+import MesFactures from "./pages/MesFactures";
 
 import "./App.css";
 
@@ -107,6 +108,12 @@ export default function App() {
           path="/mesqrcodes"
           element={
             <MesQrCodes session={session} dispatchSession={dispatchSession} />
+          }
+        />
+        <Route
+          path="/mesfactures"
+          element={
+            <MesFactures session={session} dispatchSession={dispatchSession} />
           }
         />
         <Route

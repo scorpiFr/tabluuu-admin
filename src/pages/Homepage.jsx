@@ -29,7 +29,10 @@ export default function Homepage({ session }) {
           <NavLink to="/mescartes">Mes cartes</NavLink>
         </li>
         <li className="tab">
-          <NavLink to="/mesqrcodes">Mes QR codes</NavLink>
+          <NavLink to="/mesqrcodes">Mes qr-codes</NavLink>
+        </li>
+        <li className="tab">
+          <NavLink to="/mesfactures">Mes factures</NavLink>
         </li>
         <li className="tab">
           <NavLink to="/logout">Logout</NavLink>
