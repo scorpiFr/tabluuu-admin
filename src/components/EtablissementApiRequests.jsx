@@ -194,6 +194,25 @@ async function updateEtablissementForCommercials(
   }
 }
 
+// only for commercials
+async function sendWelcomeMail(token, etablissementId) {
+  try {
+    const url =
+      Config.tabluuu_server_url +
+      "/admin/etablissement/welcome/" +
+      etablissementId;
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: token,
+      },
+    });
+    return { status: response.status };
+  } catch (error) {
+    console.log(error);
+    return { status: error.response.status || 500 };
+  }
+}
+
 async function logout(token) {
   const url = Config.tabluuu_server_url + "/admin/logout";
   const headers = {
@@ -218,4 +237,5 @@ export {
   fetchEtablissements,
   createEtablissement,
   updateEtablissementForCommercials,
+  sendWelcomeMail,
 };

@@ -4,7 +4,10 @@ import { HashLoader } from "react-spinners";
 import styles from "./Login.module.css";
 import Header from "../components/Header";
 
-import { fetchEtablissements } from "../components/EtablissementApiRequests";
+import {
+  fetchEtablissements,
+  sendWelcomeMail,
+} from "../components/EtablissementApiRequests";
 
 export default function EtablissementList({ session, dispatchSession }) {
   const [etablissements, setEtablissements] = useState([]);
@@ -57,6 +60,23 @@ export default function EtablissementList({ session, dispatchSession }) {
     return false;
   }
 
+  async function handleSayHello(e, id) {
+    e.preventDefault();
+    setIsLoading(true);
+    // fetch satus
+    const { status } = await sendWelcomeMail(session.token, id);
+    // error management
+    if (status == 401) {
+      navigate("/login");
+      return false;
+    }
+    // refresh
+    await handleFetchEtablissements();
+    // return
+    setIsLoading(false);
+    return false;
+  }
+
   if (isLoading) {
     return (
       <div className="centerDiv">
@@ -95,6 +115,7 @@ export default function EtablissementList({ session, dispatchSession }) {
               etablissement={etablissement}
               handleGotoEdit={handleGotoEdit}
               handleGotoBillList={handleGotoBillList}
+              handleSayHello={handleSayHello}
               key={etablissement.id}
             />
           );
@@ -104,7 +125,12 @@ export default function EtablissementList({ session, dispatchSession }) {
   );
 }
 
-function Etablissement({ etablissement, handleGotoEdit, handleGotoBillList }) {
+function Etablissement({
+  etablissement,
+  handleGotoEdit,
+  handleGotoBillList,
+  handleSayHello,
+}) {
   const [seeAll, setSeeAll] = useState(false);
 
   if (seeAll) {
@@ -171,6 +197,13 @@ function Etablissement({ etablissement, handleGotoEdit, handleGotoBillList }) {
           onClick={(e) => handleGotoEdit(e, etablissement.id)}
         >
           <i className="fas fa-edit" alt="Modifier"></i>
+        </button>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <button
+          className={styles.minibutton}
+          onClick={(e) => handleSayHello(e, etablissement.id)}
+        >
+          Envoyer le mot de passe
         </button>
         &nbsp;&nbsp;&nbsp;&nbsp;
         <button
