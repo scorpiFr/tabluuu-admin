@@ -31,7 +31,7 @@ export default function ItemList({ session, dispatchSession, section }) {
     // error management
     if (status == 401) {
       setIsLoading(false);
-      dispatchSession("reset");
+      dispatchSession({ type: "reset" });
       navigate("/login");
     }
   }

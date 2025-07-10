@@ -41,7 +41,12 @@ export default function App() {
         />
         <Route
           path="/etablissementlist"
-          element={<EtablissementList session={session} />}
+          element={
+            <EtablissementList
+              session={session}
+              dispatchSession={dispatchSession}
+            />
+          }
         />
         <Route
           path="/etablissementnew"

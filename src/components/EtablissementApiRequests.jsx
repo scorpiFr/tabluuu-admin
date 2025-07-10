@@ -213,6 +213,28 @@ async function sendWelcomeMail(token, etablissementId) {
   }
 }
 
+// only for commercials
+async function sudo(token, etablissementId) {
+  try {
+    const url =
+      Config.tabluuu_server_url +
+      "/admin/etablissement/sudo/" +
+      etablissementId;
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: token,
+      },
+    });
+    return { status: response.status, data: response.data };
+  } catch (error) {
+    console.log(error);
+    return {
+      status: error.response.status || 500,
+      data: error.response.data || {},
+    };
+  }
+}
+
 async function logout(token) {
   const url = Config.tabluuu_server_url + "/admin/logout";
   const headers = {
@@ -238,4 +260,5 @@ export {
   createEtablissement,
   updateEtablissementForCommercials,
   sendWelcomeMail,
+  sudo,
 };

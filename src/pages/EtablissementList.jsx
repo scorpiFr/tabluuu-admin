@@ -7,6 +7,7 @@ import Header from "../components/Header";
 import {
   fetchEtablissements,
   sendWelcomeMail,
+  sudo,
 } from "../components/EtablissementApiRequests";
 
 export default function EtablissementList({ session, dispatchSession }) {
@@ -77,6 +78,22 @@ export default function EtablissementList({ session, dispatchSession }) {
     return false;
   }
 
+  async function handleSudo(e, id) {
+    e.preventDefault();
+    const { status, data } = await sudo(session.token, id);
+    // error management
+    if (status == 401) {
+      navigate("/login");
+      return false;
+    } else if (status != 200) {
+      return false;
+    }
+    dispatchSession({ type: "set", payload: data });
+    navigate("/");
+    // return
+    return false;
+  }
+
   if (isLoading) {
     return (
       <div className="centerDiv">
@@ -116,6 +133,7 @@ export default function EtablissementList({ session, dispatchSession }) {
               handleGotoEdit={handleGotoEdit}
               handleGotoBillList={handleGotoBillList}
               handleSayHello={handleSayHello}
+              handleSudo={handleSudo}
               key={etablissement.id}
             />
           );
@@ -130,6 +148,7 @@ function Etablissement({
   handleGotoEdit,
   handleGotoBillList,
   handleSayHello,
+  handleSudo,
 }) {
   const [seeAll, setSeeAll] = useState(false);
 
@@ -211,6 +230,13 @@ function Etablissement({
           onClick={(e) => handleGotoBillList(e, etablissement.id)}
         >
           <i className="fas fa-credit-card" alt="Modifier"></i>
+        </button>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <button
+          className={styles.minibutton}
+          onClick={(e) => handleSudo(e, etablissement.id)}
+        >
+          Sudo
         </button>
       </p>
       {etablissement.is_allocated == 0 && <p>non-alloué</p>}

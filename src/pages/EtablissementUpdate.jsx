@@ -51,7 +51,7 @@ export default function EtablissementUpdate({ session, dispatchSession }) {
     // error management
     if (status == 401) {
       setIsLoading(false);
-      dispatchSession("reset");
+      dispatchSession({ type: "reset" });
       navigate("/login");
     }
     // set data
