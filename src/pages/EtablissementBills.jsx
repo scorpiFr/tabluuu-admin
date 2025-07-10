@@ -4,7 +4,8 @@ import { HashLoader } from "react-spinners";
 import styles from "./Login.module.css";
 import Header from "../components/Header";
 
-import { fetchBills } from "../components/BillApiRequest";
+import { fetchBills, setBillPaid } from "../components/BillApiRequest";
+import config from "../components/Config";
 
 export default function EtablissementBills({ session, dispatchSession }) {
   const [bills, setBills] = useState([]);
@@ -60,6 +61,22 @@ export default function EtablissementBills({ session, dispatchSession }) {
   }
     */
 
+  async function HandleSetPaid(e, id) {
+    setIsLoading(true);
+    // fetch data
+    const status = await setBillPaid(session.token, id);
+    // error management
+    if (status == 401) {
+      navigate("/login");
+      return false;
+    }
+    // refresh data
+    await handleFetchBills();
+    setIsLoading(false);
+    // return
+    return false;
+  }
+
   if (isLoading) {
     return (
       <div className="centerDiv">
@@ -112,18 +129,20 @@ export default function EtablissementBills({ session, dispatchSession }) {
                 <td>{bill.amount} €</td>
                 <td>{billStatus}</td>
                 <td>
-                  <button
-                    className={styles.minibutton}
-                    onClick={(e) => HandleDownload(e)}
+                  <a
+                    href={`${config.tabluuu_server_url}/admin/bill/download/${bill.id}/${session.token}`}
+                    target="_blank"
                   >
-                    <i class="fa-solid fa-download"></i>
-                  </button>
+                    <button className={styles.minibutton}>
+                      <i className="fa-solid fa-download"></i>
+                    </button>
+                  </a>
                   {bill.status === "created" && (
                     <>
                       &nbsp;&nbsp;&nbsp;
                       <button
                         className={styles.minibutton}
-                        onClick={(e) => HandleSetPaid(e)}
+                        onClick={(e) => HandleSetPaid(e, bill.id)}
                       >
                         Valider le paiement
                       </button>

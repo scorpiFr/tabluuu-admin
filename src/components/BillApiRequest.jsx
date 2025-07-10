@@ -22,6 +22,27 @@ async function fetchBills(token, etablissement_id) {
   }
 }
 
+async function setBillPaid(token, id) {
+  const inputs = {};
+  const inputData = new URLSearchParams(inputs);
+  const url = Config.tabluuu_server_url + "/admin/bill/setpaid/" + id;
+  const headers = {
+    "Content-Type": "application/x-www-form-urlencoded",
+    Authorization: token,
+  };
+  try {
+    const response = await axios.patch(url, inputData, {
+      headers: headers,
+    });
+    return { status: response.status };
+  } catch (error) {
+    console.log(error);
+    return {
+      status: error.response?.status || 500,
+    };
+  }
+}
+
 /*
 
 
@@ -64,28 +85,6 @@ async function createDynamicMenus(etablissement_id, token, nom) {
     return {
       status: error.response?.status || 500,
       data: error.response?.data || {},
-    };
-  }
-}
-
-async function setDynamicMenuSelected(token, id) {
-  const inputs = {};
-  const inputData = new URLSearchParams(inputs);
-  const url =
-    Config.tabluuu_server_url + "/admin/dynamicmenu/setselected/" + id;
-  const headers = {
-    "Content-Type": "application/x-www-form-urlencoded",
-    Authorization: token,
-  };
-  try {
-    const response = await axios.patch(url, inputData, {
-      headers: headers,
-    });
-    return { status: response.status };
-  } catch (error) {
-    console.log(error);
-    return {
-      status: error.response?.status || 500,
     };
   }
 }
@@ -174,4 +173,4 @@ async function deleteDynamicMenu(token, id) {
 }
   */
 
-export { fetchBills };
+export { fetchBills, setBillPaid };
