@@ -51,6 +51,12 @@ export default function EtablissementList({ session, dispatchSession }) {
     return false;
   }
 
+  function handleGotoBillList(e, id) {
+    e.preventDefault();
+    navigate("/etablissementbills/" + id);
+    return false;
+  }
+
   if (isLoading) {
     return (
       <div className="centerDiv">
@@ -88,6 +94,7 @@ export default function EtablissementList({ session, dispatchSession }) {
             <Etablissement
               etablissement={etablissement}
               handleGotoEdit={handleGotoEdit}
+              handleGotoBillList={handleGotoBillList}
               key={etablissement.id}
             />
           );
@@ -97,7 +104,7 @@ export default function EtablissementList({ session, dispatchSession }) {
   );
 }
 
-function Etablissement({ etablissement, handleGotoEdit }) {
+function Etablissement({ etablissement, handleGotoEdit, handleGotoBillList }) {
   const [seeAll, setSeeAll] = useState(false);
 
   if (seeAll) {
@@ -164,6 +171,13 @@ function Etablissement({ etablissement, handleGotoEdit }) {
           onClick={(e) => handleGotoEdit(e, etablissement.id)}
         >
           <i className="fas fa-edit" alt="Modifier"></i>
+        </button>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <button
+          className={styles.minibutton}
+          onClick={(e) => handleGotoBillList(e, etablissement.id)}
+        >
+          <i className="fas fa-credit-card" alt="Modifier"></i>
         </button>
       </p>
       {etablissement.is_allocated == 0 && <p>non-alloué</p>}

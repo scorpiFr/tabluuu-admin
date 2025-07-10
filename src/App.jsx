@@ -22,6 +22,7 @@ import HomepageCommercial from "./pages/HomepageCommercial";
 import EtablissementList from "./pages/EtablissementList";
 import EtablissementNew from "./pages/EtablissementNew";
 import EtablissementUpdate from "./pages/EtablissementUpdate";
+import EtablissementBills from "./pages/EtablissementBills";
 
 import "./App.css";
 
@@ -53,6 +54,15 @@ export default function App() {
           path="/etablissementupdate/:id"
           element={
             <EtablissementUpdate
+              session={session}
+              dispatchSession={dispatchSession}
+            />
+          }
+        />
+        <Route
+          path="/etablissementbills/:etablissementId"
+          element={
+            <EtablissementBills
               session={session}
               dispatchSession={dispatchSession}
             />

@@ -179,3 +179,16 @@ input:focus {
 .qrcodes p {
   font-size: 1.5rem;
 }
+
+.bills {
+  width: 100%;
+}
+
+.bills th {
+  font-weight: bold;
+  font-size: 1.6rem;
+}
+
+.bills td {
+  font-size: 1.6rem;
+}
