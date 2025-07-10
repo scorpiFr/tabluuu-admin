@@ -40,28 +40,9 @@ export default function EtablissementBills({ session, dispatchSession }) {
     setIsLoading(false);
     return false;
   }
-  /*
-      
-  function HandleNewEtablissement(e) {
-    e.preventDefault();
-    navigate("/etablissementnew");
-    return false;
-  }
-
-  function handleGotoEdit(e, id) {
-    e.preventDefault();
-    navigate("/etablissementupdate/" + id);
-    return false;
-  }
-
-  function handleGotoBillList(e, id) {
-    e.preventDefault();
-    navigate("/etablissementbills/" + id);
-    return false;
-  }
-    */
 
   async function HandleSetPaid(e, id) {
+    e.preventDefault();
     setIsLoading(true);
     // fetch data
     const status = await setBillPaid(session.token, id);
@@ -74,6 +55,12 @@ export default function EtablissementBills({ session, dispatchSession }) {
     await handleFetchBills();
     setIsLoading(false);
     // return
+    return false;
+  }
+
+  function HandleNewBill(e) {
+    e.preventDefault();
+    navigate("/billnew/" + etablissementId);
     return false;
   }
 

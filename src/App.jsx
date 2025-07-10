@@ -23,6 +23,7 @@ import EtablissementList from "./pages/EtablissementList";
 import EtablissementNew from "./pages/EtablissementNew";
 import EtablissementUpdate from "./pages/EtablissementUpdate";
 import EtablissementBills from "./pages/EtablissementBills";
+import BillNew from "./pages/BillNew";
 
 import "./App.css";
 
@@ -66,6 +67,12 @@ export default function App() {
               session={session}
               dispatchSession={dispatchSession}
             />
+          }
+        />
+        <Route
+          path="/billnew/:etablissementId"
+          element={
+            <BillNew session={session} dispatchSession={dispatchSession} />
           }
         />
 
