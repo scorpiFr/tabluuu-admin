@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes, Link, NavLink } from "react-router-dom";
 
 import Homepage from "./pages/Homepage";
-import useSession from "./components/UseSession";
+import UseSession from "./components/UseSession";
 import Moncompte from "./pages/Moncompte";
 import Login from "./pages/Login";
 import ChangePassword from "./pages/ChangePassword";
@@ -29,7 +29,7 @@ import MesFactures from "./pages/MesFactures";
 import "./App.css";
 
 export default function App() {
-  const { session, dispatchSession } = useSession();
+  const { session, dispatchSession } = UseSession();
 
   return (
     <BrowserRouter>

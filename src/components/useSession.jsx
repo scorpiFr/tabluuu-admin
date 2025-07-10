@@ -1,6 +1,6 @@
 import { useReducer, useEffect } from "react";
 
-export default function useSession() {
+export default function UseSession() {
   function reducer(currState, action) {
     switch (action.type) {
       case "logout":
