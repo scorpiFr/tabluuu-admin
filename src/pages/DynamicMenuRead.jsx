@@ -104,6 +104,7 @@ export default function DynamicMenuRead({ session, dispatchSession }) {
     mooveSection("up", sectionId);
     // return
     setError("");
+    return false;
   }
 
   function HandleMoveDown(e, sectionId) {
@@ -113,13 +114,18 @@ export default function DynamicMenuRead({ session, dispatchSession }) {
     mooveSection("down", sectionId);
     // return
     setError("");
+    return false;
   }
 
-  function HandleNewSection() {
+  function HandleNewSection(e) {
+    e.preventDefault();
     navigate("/section/new/" + dynamicmenuid);
+    return false;
   }
-  function HandleGotoEdit() {
-    navigate("/section/edit/" + dynamicmenuid);
+  function HandleGotoEdit(e, id) {
+    e.preventDefault();
+    navigate("/section/edit/" + id);
+    return false;
   }
 
   // verify session & get etablissement
