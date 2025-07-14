@@ -89,7 +89,7 @@ export default function EtablissementBills({ session, dispatchSession }) {
     return (
       <div className="centerDiv">
         <Header />
-        <h1>Mes factures</h1>
+        <h1>Factures de l'établissement {etablissementId}</h1>
         <p>&nbsp;</p>
         <button className={styles.ctabutton} onClick={(e) => HandleNewBill(e)}>
           + Ajouter une facture
@@ -104,7 +104,7 @@ export default function EtablissementBills({ session, dispatchSession }) {
   return (
     <div className="centerDiv">
       <Header />
-      <h1>Mes factures</h1>
+      <h1>Factures de l'établissement {etablissementId}</h1>
       <p>&nbsp;</p>
       <button className={styles.ctabutton} onClick={(e) => HandleNewBill(e)}>
         + Ajouter une facture
