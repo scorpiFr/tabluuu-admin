@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { HashLoader } from "react-spinners";
 import Header from "../components/Header";
 import styles from "./Login.module.css";
-import { checkPaypalOrder } from "../components/BillApiRequest";
+import { checkPaypalOrderByPaypalId } from "../components/BillApiRequest";
 
 export default function PaypalSuccess({ session, dispatchSession }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -24,7 +24,7 @@ export default function PaypalSuccess({ session, dispatchSession }) {
   async function handleCheckPaypalOrder() {
     setIsLoading(true);
     // fetch data
-    const { status, data } = await checkPaypalOrder(
+    const { status, data } = await checkPaypalOrderByPaypalId(
       session.token,
       paypalOrderId
     );

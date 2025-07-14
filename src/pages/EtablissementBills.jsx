@@ -4,7 +4,11 @@ import { HashLoader } from "react-spinners";
 import styles from "./Login.module.css";
 import Header from "../components/Header";
 
-import { fetchBills, setBillPaid } from "../components/BillApiRequest";
+import {
+  fetchBills,
+  setBillPaid,
+  checkPaypalOrder,
+} from "../components/BillApiRequest";
 import config from "../components/Config";
 
 export default function EtablissementBills({ session, dispatchSession }) {
@@ -46,6 +50,23 @@ export default function EtablissementBills({ session, dispatchSession }) {
     setIsLoading(true);
     // fetch data
     const status = await setBillPaid(session.token, id);
+    // error management
+    if (status == 401) {
+      navigate("/login");
+      return false;
+    }
+    // refresh data
+    await handleFetchBills();
+    setIsLoading(false);
+    // return
+    return false;
+  }
+
+  async function HandleCheckPaypalOrder(e, id) {
+    e.preventDefault();
+    setIsLoading(true);
+    // fetch data
+    const status = await checkPaypalOrder(session.token, id);
     // error management
     if (status == 401) {
       navigate("/login");
@@ -126,6 +147,13 @@ export default function EtablissementBills({ session, dispatchSession }) {
                   </a>
                   {bill.status === "created" && (
                     <>
+                      &nbsp;&nbsp;&nbsp;
+                      <button
+                        className={styles.minibutton}
+                        onClick={(e) => HandleCheckPaypalOrder(e, bill.id)}
+                      >
+                        Vérifier le paiement
+                      </button>
                       &nbsp;&nbsp;&nbsp;
                       <button
                         className={styles.minibutton}

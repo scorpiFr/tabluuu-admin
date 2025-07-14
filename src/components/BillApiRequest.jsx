@@ -101,12 +101,31 @@ async function getBillPaypalLink(token, billId) {
   }
 }
 
-async function checkPaypalOrder(token, paypalOrderId) {
+async function checkPaypalOrderByPaypalId(token, paypalOrderId) {
   try {
     const url =
       Config.tabluuu_server_url +
       "/admin/bill/checkpaypalorderbypaypalid/" +
       paypalOrderId;
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: token,
+      },
+    });
+    return { status: response.status, data: response.data };
+  } catch (error) {
+    console.log(error);
+    return {
+      status: error.response?.status || 500,
+      data: error.response?.data || {},
+    };
+  }
+}
+
+async function checkPaypalOrder(token, billId) {
+  try {
+    const url =
+      Config.tabluuu_server_url + "/admin/bill/checkpaypalorder/" + billId;
     const response = await axios.get(url, {
       headers: {
         Authorization: token,
@@ -128,4 +147,5 @@ export {
   createBill,
   getBillPaypalLink,
   checkPaypalOrder,
+  checkPaypalOrderByPaypalId,
 };
