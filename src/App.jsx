@@ -25,6 +25,8 @@ import EtablissementUpdate from "./pages/EtablissementUpdate";
 import EtablissementBills from "./pages/EtablissementBills";
 import BillNew from "./pages/BillNew";
 import MesFactures from "./pages/MesFactures";
+import PaypalSuccess from "./pages/PaypalSuccess";
+import PaypalCancel from "./pages/PaypalCancel";
 
 import "./App.css";
 
@@ -81,6 +83,16 @@ export default function App() {
             <BillNew session={session} dispatchSession={dispatchSession} />
           }
         />
+        <Route
+          path="/paypal-success"
+          element={
+            <PaypalSuccess
+              session={session}
+              dispatchSession={dispatchSession}
+            />
+          }
+        />
+        <Route path="/paypal-cancel" element={<PaypalCancel />} />
 
         <Route
           path="/login"

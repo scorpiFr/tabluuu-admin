@@ -82,4 +82,50 @@ async function createBill(
   }
 }
 
-export { fetchBills, setBillPaid, createBill };
+async function getBillPaypalLink(token, billId) {
+  try {
+    const url =
+      Config.tabluuu_server_url + "/admin/bill/getpaypalapprovelink/" + billId;
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: token,
+      },
+    });
+    return { status: response.status, data: response.data };
+  } catch (error) {
+    console.log(error);
+    return {
+      status: error.response?.status || 500,
+      data: error.response?.data || {},
+    };
+  }
+}
+
+async function checkPaypalOrder(token, paypalOrderId) {
+  try {
+    const url =
+      Config.tabluuu_server_url +
+      "/admin/bill/checkpaypalorderbypaypalid/" +
+      paypalOrderId;
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: token,
+      },
+    });
+    return { status: response.status, data: response.data };
+  } catch (error) {
+    console.log(error);
+    return {
+      status: error.response?.status || 500,
+      data: error.response?.data || {},
+    };
+  }
+}
+
+export {
+  fetchBills,
+  setBillPaid,
+  createBill,
+  getBillPaypalLink,
+  checkPaypalOrder,
+};

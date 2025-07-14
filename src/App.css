@@ -11,6 +11,13 @@
   will-change: filter;
   transition: filter 300ms;
 }
+.paypalButton {
+  max-width: 50px;
+  max-height: 50px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
